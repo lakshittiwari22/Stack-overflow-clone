@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import "./navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import decode from "jwt-decode"
+import { googleLogout } from "@react-oauth/google";
+import decode from "jwt-decode";
 
 import logo from "../../assets/logo-stackoverflow.png";
 import search from "../../assets/magnifying-glass-solid.svg";
@@ -16,6 +17,7 @@ const Navbar = () => {
   let User = useSelector((state) => state.currentUserReducer);
 
   const handleLogout = () => {
+    googleLogout();
     dispatch({ type: "LOGOUT" });
     navigate("/");
     dispatch(setCurrentUser(null));
@@ -24,9 +26,9 @@ const Navbar = () => {
   useEffect(() => {
     const token = User?.token;
     if (token) {
-      const decodedToken = decode(token)
-      if(decodedToken.exp * 1000 < new Date().getTime()){
-        handleLogout()
+      const decodedToken = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        handleLogout();
       }
     }
 

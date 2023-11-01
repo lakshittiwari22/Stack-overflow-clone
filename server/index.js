@@ -19,11 +19,11 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRoutes);
 app.use("/questions", questionRoutes);
-app.use("/answer", answerRoutes)
+app.use("/answer", answerRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-const CONNECTION_URL =process.env.CONNECTION_URL;
+const CONNECTION_URL = process.env.CONNECTION_URL;
 
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })

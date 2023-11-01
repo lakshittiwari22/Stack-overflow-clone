@@ -15,8 +15,21 @@ const AskQuestion = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setQuestionBody('')
-    dispatch(AskPublicQuestion({ questionTitle, questionBody, questionTags, userPosted: User.result.name, userId: User?.result?._id}, navigate));
+    if (User) {
+      if (questionTitle && questionBody && questionTags) {
+        dispatch(
+          AskPublicQuestion(
+            {
+              questionTitle,
+              questionBody,
+              questionTags,
+              userPosted: User.result.name,
+            },
+            navigate
+          )
+        );
+      } else alert("Please enter all the fields");
+    } else alert("Login to ask question");
   };
   const handleEnter = (e) => {
     if (e.code === "Enter") {
@@ -54,7 +67,7 @@ const AskQuestion = () => {
               </p>
 
               <textarea
-                value=""
+                name=""
                 id="ask-ques-body"
                 onChange={(e) => {
                   setQuestionBody(e.target.value);
@@ -62,7 +75,6 @@ const AskQuestion = () => {
                 onKeyDown={handleEnter}
                 cols="30"
                 rows="10"
-                
               ></textarea>
             </label>
             <label htmlFor="ask-ques-tags">

@@ -90,6 +90,36 @@
   cursor: pointer;
 }
 
+.google-btn {
+  padding: 10px 20px;
+  margin-top: 60px;
+  margin-bottom: 10px;
+  width: 100%;
+  border: 0px none;
+  background-color: white; /* Google Blue */
+  
+  border-radius: 5px;
+
+  color: #636b74;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+
+}
+
+.google-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  
+}
+
+.google-btn:hover {
+  color: #0c0d0e;
+  
+}
 @media screen and (max-width: 820px) {
   .auth-container-1 {
     display: none;

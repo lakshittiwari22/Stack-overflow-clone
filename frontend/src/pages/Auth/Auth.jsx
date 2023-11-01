@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
+
+
 import icon from "../../assets/stack-overflow.png";
+import googleLogo from '../../assets/google-logo.png'
 import AboutAuth from "./AboutAuth";
-import { signup, login } from "../../actions/auth";
+import { signup, login, signUpWithGoogle } from "../../actions/auth";
+
 import "./auth.css";
 
 const Auth = () => {
@@ -18,6 +23,14 @@ const Auth = () => {
     setisSignup(!isSignup);
   };
 
+  const handleGoogleLoginSuccess = (tokenResponse) => {
+    const accessToken = tokenResponse.access_token;
+
+    
+
+    dispatch(signUpWithGoogle(accessToken, navigate));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email && !password) {
@@ -28,11 +41,15 @@ const Auth = () => {
       if (!name) {
         alert("Enter a name to continue");
       }
-      dispatch(signup({ name, email, password },navigate));
+      dispatch(signup({ name, email, password }, navigate));
     } else {
-      dispatch(login({ email, password },navigate));
+      dispatch(login({ email, password }, navigate));
     }
   };
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: handleGoogleLoginSuccess,
+  });
 
   return (
     <section className="auth-section">
@@ -42,6 +59,13 @@ const Auth = () => {
         {!isSignup && (
           <img src={icon} alt="stack overflow icon" className="login-logo" />
         )}
+        {/*---------- Sign in with google-------------------- -*/}
+        
+        <button className="google-btn" onClick={() => loginWithGoogle()}>
+        <img src={googleLogo} alt="Google Logo" className="google-logo"/>
+          {isSignup ? "Sign up with google": "Log in with google"}
+        </button>
+
         <form onSubmit={handleSubmit}>
           {isSignup && (
             //------username------
@@ -57,6 +81,7 @@ const Auth = () => {
               />
             </label>
           )}
+
           {/*------ emial -----*/}
           <label htmlFor="email">
             <h4>Email</h4>
@@ -104,6 +129,7 @@ const Auth = () => {
           <button type="submit" className="auth-btn">
             {isSignup ? "Sign up" : "Log in"}
           </button>
+
           {isSignup && (
             <p style={{ color: "#666767", fontSize: "13px" }}>
               By clicking "Sign up", you agree to our

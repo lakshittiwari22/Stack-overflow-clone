@@ -1,4 +1,5 @@
 import React from "react";
+import './bootstrap-social.css'
 import "./auth.css";
 
 const AboutAuth = () => {
@@ -15,6 +16,16 @@ const AboutAuth = () => {
       <p style={{ fontSize: "13px", color: "#007ac6" }}>
         Get Stack Overflow for Teams free for up to 50 users.
       </p>
+      {/* <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <a class="btn btn-social-icon btn-google" href="/auth/google" role="button">
+              <i class="fa fa-google"></i>
+              Sign Up with Google
+            </a>
+          </div>
+        </div>
+      </div> */}
     </div>
   );
 };

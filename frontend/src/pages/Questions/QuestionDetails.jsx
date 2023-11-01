@@ -24,7 +24,7 @@ const QuestionDetails = () => {
   const [answer, setAnswer] = useState(" ");
   const location = useLocation();
 
-  const url = "http://localhost:3000";
+  const url = "https://stack-overflow-clone-22.netlify.app";
 
   const handlePostAns = (e, answerLength) => {
     e.preventDefault();
