@@ -16,8 +16,6 @@ API.interceptors.request.use((req) => {
 
 
 export const logIn = (authData) => API.post("/user/login", authData);
-// export const signInGoogle = (accessToken) =>
-//   API.post("/user/login", { googleAccessToken: accessToken });
 
 export const signUp = (authData) => API.post("/user/signup", authData);
 export const signUpGoogle = (accessToken) =>

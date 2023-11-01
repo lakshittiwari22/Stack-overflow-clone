@@ -35,14 +35,3 @@ export const login = (authData, navigate) => async (dispatch) => {
   }
 };
 
-// export const signInWithGoogle = (accessToken, navigate) => async (dispatch) => {
-//   try {
-//     // login user
-//     const { data } = await api.signInGoogle(accessToken);
-
-//     dispatch({ type: "AUTH", data });
-//     navigate("/");
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
