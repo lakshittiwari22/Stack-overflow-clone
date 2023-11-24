@@ -96,3 +96,25 @@
 .display-tags-time .display-time{
     font-size: 13px;
 }
+
+
+
+@media (max-width:600px) {
+   
+    .main-bar{
+        width: 100%;
+    }
+
+    .main-bar-header h1{
+        font-weight: 400;
+        font-size: 6vw;
+        margin: 30px 0px;
+    }
+
+    .loding{
+        font-weight: 400;
+        font-size: 6vw;
+        margin: 30px 0px;
+        color: #636B74
+    }
+}

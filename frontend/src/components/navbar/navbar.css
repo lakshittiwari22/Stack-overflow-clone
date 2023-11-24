@@ -12,6 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
 }
 
 .navbar {
@@ -44,11 +45,10 @@ img {
   cursor: pointer;
   border-radius: 20px;
   padding: 10px 20px;
-  
 }
 
 .nav-item:hover {
-  background-color: rgb(219, 219, 219);
+  background-color: #dbdbdb;
 }
 
 .navbar form {
@@ -56,6 +56,8 @@ img {
   padding: 0px 12px;
   position: relative;
 }
+
+
 
 .navbar form input {
   min-width: 90%;
@@ -70,18 +72,152 @@ img {
   position: absolute;
   left: 22px;
   top: 3px;
-
 }
 
-.nav-links{
-    padding: 7px 13px;
+.nav-links {
+  padding: 7px 13px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e1ecf4;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.nav-link:hover {
+  background-color: #d3e4eb;
+}
+
+.avatar-container-mobile {
+  display: flex;
+}
+
+.menubar {
+  display: none;
+}
+
+.stackoverflow-icon {
+  display: none;
+}
+
+.search-icon-mobile {
+  display: none;
+}
+
+.nav-btn-mobile {
+  display: none;
+}
+
+.sidebar {
+  display: none;
+}
+
+/* media-queries */
+
+@media (max-width: 600px) {
+  .main-nav {
+    width: 100%;
+    height: 6.5vh;
+    box-shadow: none;
+    border-bottom: 1px solid #d3e4eb;
+  }
+
+  .navbar {
+    height: 100%;
+    min-width: 93%;
+    display: flex;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .nav-bar-mobile {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .menubar {
+    display: block;
+  }
+
+  .menubar-icon {
+    width: 23px;
+    height: 23px;
+    margin-right: 3px;
+    color: #636b74;
+  }
+
+  .closing-icon {
+    display: block;
+    width: 23px;
+    height: 23px;
+    margin-right: 3px;
+    color: #636b74;
+  }
+
+  .search-icon-mobile {
+    display: block;
+    align-self: center;
+    width: 18px;
+    height: 18px;
+    color: #636b74;
+  }
+
+  .nav-btn-mobile {
+    display: block;
     border: none;
+    padding: 7px 13px;
     border-radius: 5px;
-    background-color: #E1ECF4;
     cursor: pointer;
-    margin-left: 10px;
-}
+    color:  #636b74;
+    
+  }
 
-.nav-link:hover{
-    background-color: #d3e4eb;
+  .nav-btn-mobile:hover{
+    background-color: #e1ecf4;
+  }
+
+  .stackoverflow-icon {
+    display: block;
+    height: 34px;
+    width: 34px;
+    margin-left: 5px;
+  }
+
+  .loginBtn-container-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .avatar-container-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .avatar-container-mobile .search-icon-mobile {
+    margin-right: 8px;
+  }
+
+  .sidebar {
+    display: block;
+    position: absolute;
+    top: 20px;
+    padding-left: 10px;
+    left: -100%;
+    background-color: #f8f9f9;
+    box-shadow: 0px 1px 5px #00000033;
+    width: 50vw;
+    height: 50vh;
+    z-index: 1;
+    margin-left: 0;
+    transition: 0.3s;
+  }
+
+  .slide {
+    left: 0;
+  }
 }

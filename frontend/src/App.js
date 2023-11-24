@@ -6,6 +6,7 @@ import AllRoutes from "./AllRoutes";
 import { useEffect } from "react";
 import { fetchAllQuestions } from "./actions/question";
 import { fetchAllUsers } from "./actions/users";
+import { FetchAllPosts } from "./actions/post";
 
 function App() {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchAllQuestions());
     dispatch(fetchAllUsers());
+    dispatch(FetchAllPosts());
   }, [dispatch]);
 
   return (

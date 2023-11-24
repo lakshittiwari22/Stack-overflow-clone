@@ -5,11 +5,11 @@ const Avatar = ({
   backgroundColor,
   px,
   py,
-  
+
   color,
   borderRadius,
   fontSize,
-  cursor
+  cursor,
 }) => {
   const style = {
     backgroundColor,
@@ -19,10 +19,14 @@ const Avatar = ({
     fontSize,
     textAlign: "center",
     cursor: cursor || null,
-    textDecoration: 'none'
+    textDecoration: "none",
   };
 
-  return <div style={style}>{children}</div>;
+  return (
+    <div style={style}>
+      <div className="inner">{children}</div>
+    </div>
+  );
 };
 
 export default Avatar;

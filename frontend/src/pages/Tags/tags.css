@@ -34,3 +34,36 @@
   color: #323232;
   line-height: 17px;
 }
+
+
+@media (max-width:600px) { 
+
+  .tags-h1 {
+    
+    font-size: 5.3vw;
+    margin-bottom: 3vh;
+  }
+
+  .tags-p {
+    
+    font-size: 3.8vw;
+  }
+
+  .tag-list-container {
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2vh;
+  }
+  
+
+  .tag h5{
+    font-weight: 450;
+    font-size: 3vw;
+  }
+  
+  .tag p{
+    font-size: 2.8vw;
+  }
+  
+}

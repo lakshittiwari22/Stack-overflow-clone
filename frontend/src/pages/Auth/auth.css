@@ -124,4 +124,8 @@
   .auth-container-1 {
     display: none;
   }
+  .auth-section{
+
+    min-height: 100vh;
+  }
 }

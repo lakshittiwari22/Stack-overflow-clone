@@ -1,12 +1,11 @@
-.avatar{
-    width: 30px;
-    height: 30px;
-    border: 1px solid red;
-    border-radius: 50%;
+.avatar-outer{
+    
     display: flex;
-    align-items: center;
+    
+    width: 20px;
+    height: 20px;
     justify-content: center;
-    background-color: rgb(188, 74, 74);
-    color: black;
+    align-items: center;
     
 }
+

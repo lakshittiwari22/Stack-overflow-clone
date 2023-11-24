@@ -28,6 +28,7 @@ const AskQuestion = () => {
             navigate
           )
         );
+        
       } else alert("Please enter all the fields");
     } else alert("Login to ask question");
   };

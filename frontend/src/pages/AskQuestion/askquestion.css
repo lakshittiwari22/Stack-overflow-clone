@@ -54,4 +54,26 @@
     background-color: #0086d8;
 }
 
+@media (max-width:600px) {
 
+ .ask-ques-container{
+  max-width: 360px;
+  
+ }
+
+ .ask-ques-container h1 {
+  font-size: 2.5vh;
+}
+
+.ask-form-container label p {
+ color: #636B74;
+  font-size: 1.5vh;
+  
+}
+
+.ask-form-container label h4 {
+  font-size: 1.8vh;
+}
+
+  
+}
