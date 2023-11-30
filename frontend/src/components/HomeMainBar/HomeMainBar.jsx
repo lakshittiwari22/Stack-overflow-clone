@@ -1,11 +1,23 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import notificationIcon from '../../assets/globe.svg'
 import "./homemainbar.css";
 import QuestionList from "./QuestionList";
 import { useSelector } from "react-redux";
 
 const HomeMainBar = () => {
  
+  if ('Notification' in window) {
+    // Request permission to show notifications
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log("permission granted");
+      }else{
+        console.log("permission not granted");
+      }
+    });
+  }
+  
 
   const user = 1;
 
@@ -37,6 +49,7 @@ const HomeMainBar = () => {
         <button onClick={checkAuth} className="ask-btn">
           Ask Question
         </button>
+        
       </div>
       <div>
         {questionsList.data === null ? (

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import copy from "copy-to-clipboard";
 import {
   faTrash,
   faEarthAsia,
@@ -15,40 +16,64 @@ import { useDispatch, useSelector } from "react-redux";
 import { LikePublicPost, deletePost, postComment } from "../../actions/post";
 
 const PostDetails = () => {
+
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []); // The empty dependency array ensures that this effect runs only once
+
   const { id } = useParams();
+  const url = "localhost:3000";
 
   const posts = useSelector((state) => state.postReducer);
-
-  const singlePost = posts.data?.filter((post) => post._id === id);
   let User = useSelector((state) => state.currentUserReducer);
 
-  const [like, setLike] = useState(false);
+  const singlePost = posts.data?.filter((post) => post._id === id);
+
+  // defining variable for changing the css class of like button
+  const userLiked = singlePost?.map((post) => {
+    return post.likes?.findIndex((id) => User?.result._id === id);
+  });
+
   const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLikes = () => {
     dispatch(LikePublicPost(id, User.result._id));
-    setLike(!like);
   };
 
   const handleSubmit = (e, commentLength) => {
     e.preventDefault();
-    dispatch(
-      postComment({
-        id,
-        commentBody: comment,
-        noOfComments: commentLength + 1,
-        userCommented: User.result.name,
-        userId: User.result._id,
-      })
-    );
-    setComment(" ");
+
+    if (comment) {
+      dispatch(
+        postComment({
+          id,
+          commentBody: comment,
+          noOfComments: commentLength + 1,
+          userCommented: User.result.name,
+          userId: User.result._id,
+        })
+      );
+    } else {
+      alert("comment cannot be empty");
+    }
+
+    setComment("");
+    setIsSubmitting(false);
   };
 
   const handleDelete = () => {
     dispatch(deletePost(id, navigate));
-  }
+  };
+
+  const handleShare = () => {
+    copy(url + location.pathname);
+    alert("copied to clipboard");
+  };
 
   return (
     <div className="post-div">
@@ -62,11 +87,10 @@ const PostDetails = () => {
                   <h1>{post.userPosted}'s post</h1>
                 </div>
                 {User?.result?._id === post.userId && (
-                           <div className="delete-icon">
-                           <FontAwesomeIcon icon={faTrash} onClick={handleDelete}/>
-                         </div>
-                          )}
-                
+                  <div className="delete-icon">
+                    <FontAwesomeIcon icon={faTrash} onClick={handleDelete} />
+                  </div>
+                )}
               </div>
 
               <div className="line"></div>
@@ -99,25 +123,43 @@ const PostDetails = () => {
               </div>
               <div
                 className={
-                  post.postImg
+                  post.postMedia
                     ? "post-image-container"
                     : "post-image-container-inactive"
                 }
               >
-                <img src={post.postImg} alt="displayImg" />
+                {post.contentType === "image" ? (
+                  <Link to={`/Social/${post._id}`}>
+                    <img src={post.postMedia} alt="displayImg" />
+                  </Link>
+                ) : post.contentType === "video" ? (
+                  <video width="100%" height="100%" controls>
+                    <source src={post.postMedia} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : null}
               </div>
 
               <div className="post-details-container">
-                <p style={{fontSize: "12px",color:"slateGray"}}>{post.likes.length} {post.likes.length === 1 ? "like" : "likes"}</p>
+                <p style={{ fontSize: "12px", color: "slateGray" }}>
+                  {post.likes.length}{" "}
+                  {post.likes.length === 1 ? "like" : "likes"}
+                </p>
 
-                <p style={{fontSize: "12px",color:"slateGray"}}>{post.noOfComments} Comments</p>
+                <p style={{ fontSize: "12px", color: "slateGray" }}>
+                  {post.noOfComments} Comments
+                </p>
               </div>
 
               <div className="line"></div>
 
               <div className="post-btn">
                 <button
-                  className={!like ? "like-btn" : "like-btn-active"}
+                  className={
+                    userLiked?.toString() === "-1"
+                      ? "like-btn"
+                      : "like-btn-active"
+                  }
                   onClick={handleLikes}
                 >
                   <FontAwesomeIcon icon="fa-regular fa-thumbs-up" />
@@ -130,7 +172,7 @@ const PostDetails = () => {
                   <p>Comment</p>
                 </button>
 
-                <button className="share-btn">
+                <button className="share-btn" onClick={handleShare}>
                   <FontAwesomeIcon icon={faShare} className="btn-icon" />
                   <p>share</p>
                 </button>
@@ -141,7 +183,7 @@ const PostDetails = () => {
                 {post.comments.map((comment) => {
                   return (
                     <div key={comment.id}>
-                      <DisplayComments comment={comment} />
+                      <DisplayComments comment={comment} post={post} />
                     </div>
                   );
                 })}
@@ -171,9 +213,12 @@ const PostDetails = () => {
                       cols="80"
                       rows="4"
                       placeholder="Write a comment"
+                      value={comment}
                       onChange={(e) => setComment(e.target.value)}
                     ></textarea>
-                    <button type="submit">send</button>
+                    <button type="submit" disabled={isSubmitting}>
+                      send
+                    </button>
                   </form>
                 </div>
               </section>

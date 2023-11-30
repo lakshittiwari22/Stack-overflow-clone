@@ -1,9 +1,13 @@
 import React from "react";
 import "./menubarbar.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import globe from "../../assets/globe.svg";
+import { useSelector } from "react-redux";
 
 const Menubar = ({ slide }) => {
+  const navigate = useNavigate();
+  let User = useSelector((state) => state.currentUserReducer);
+
   const handleSlide = () => {};
   return (
     <div className="menubar">
@@ -50,7 +54,7 @@ const Menubar = ({ slide }) => {
             <p>Users</p>
           </NavLink>
           <NavLink
-            to="/Social"
+            to={User ? "/Social" : "/Auth"}
             className="side-nav-links"
             activeclassname="active"
             style={{ paddingLeft: "40px" }}

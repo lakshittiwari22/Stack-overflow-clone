@@ -47,6 +47,8 @@ const QuestionDetails = () => {
         );
       }
     }
+    setAnswer("");
+    console.log("Textarea reset:", answer);
   };
 
   const handleShare = () => {
@@ -112,7 +114,7 @@ const QuestionDetails = () => {
                             Share
                           </button>
 
-                          {User?.result?._id === question?.userId && (
+                          {User?.result?._id === question.userId && (
                             <button type="delete" onClick={handleDelete}>
                               Delete
                             </button>
@@ -160,6 +162,7 @@ const QuestionDetails = () => {
                       id=""
                       cols="30"
                       rows="10"
+                      value={answer}
                       onChange={(e) => setAnswer(e.target.value)}
                     ></textarea>
                     <br />

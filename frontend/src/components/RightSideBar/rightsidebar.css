@@ -27,8 +27,7 @@
 .right-sidebar-div-1 .right-sidebar-div-2 {
   display: flex;
   align-items: flex-start;
-  justify-content: space-evenly;
-  
+  justify-content: flex-start;
 }
 
 .right-sidebar-div-1 .right-sidebar-div-2 p {
@@ -69,8 +68,17 @@
 }
 
 @media screen and (max-width: 1020px) {
-  .right-sidebar{
+  .right-sidebar {
     width: 100%;
     margin: 40px auto;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 820px) {
+  .right-sidebar {
+    
+    width: 100%;
+    
+    font-size: 15px;
   }
 }

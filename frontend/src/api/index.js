@@ -1,7 +1,10 @@
+// || "https://stack-overflow-clone-server-ebfz.onrender.com"
+// "http://localhost:5000"
+
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000" || "https://stack-overflow-clone-server-ebfz.onrender.com", 
+  baseURL: "https://stack-overflow-clone-server-ebfz.onrender.com",
 });
 
 // sending users token  for each and every request to the database(backend)
@@ -34,6 +37,7 @@ export const postAnswer = (id, noOfAnswers, answerBody, userAnswered, userId) =>
     userAnswered,
     userId,
   });
+
 export const deleteAnswer = (id, answerId, noOfAnswers) =>
   API.patch(`/answer/delete/${id}`, { answerId, noOfAnswers });
 
@@ -64,3 +68,6 @@ export const postComment = (
     userCommented,
     userId,
   });
+
+  export const deleteComment = (id, commentId, noOfComments) =>
+  API.patch(`/comment/delete/${id}`, { commentId, noOfComments });

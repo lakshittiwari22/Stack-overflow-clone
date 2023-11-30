@@ -23,10 +23,11 @@ const Questions = ({ question }) => {
               <p key={tag}>{tag}</p>
             ))}
           </div>
-          <p className="display-time">
+         
+        </div>
+        <p className="display-time">
             asked {moment(question.askedOn).fromNow()} {question.userPosted}
           </p>
-        </div>
       </div>
     </div>
   );

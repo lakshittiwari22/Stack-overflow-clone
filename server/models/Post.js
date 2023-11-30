@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const PostSchema = mongoose.Schema({
   caption: { type: String, required: "Post must have a cation" },
-  postImg: { type: String },
+  postMedia: { type: String },
+  contentType: {type: String},
   noOfComments: { type: Number, default: 0 },
   likes: { type: [String], default: [] },
   userPosted: { type: String, required: "Post must have an user" },

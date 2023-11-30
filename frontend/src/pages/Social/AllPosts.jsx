@@ -11,6 +11,8 @@ import AddPostPopup from "./AddPostPopup";
 
 const AllPosts = () => {
   const Posts = useSelector((state) => state.postReducer);
+
+  
   
 
   const [popup, setPopup] = useState(false);
@@ -41,7 +43,7 @@ const AllPosts = () => {
               <p>{User?.result.name.charAt(0)}</p>
             </Link>
           </Avatar>
-          <form>
+          
             <input
               type="text"
               placeholder="What's on your mind,Lakshit"
@@ -49,7 +51,7 @@ const AllPosts = () => {
               autoComplete="off"
               onClick={handleTrigger}
             />
-          </form>
+         
         </div>
         <div className="line"></div>
         <div className="create-area-btn">
@@ -72,7 +74,7 @@ const AllPosts = () => {
         {Posts.data === null ? (
           <h1>Loding...</h1>
         ) : (
-          Posts.data?.map((post) => {
+          Posts.data?.slice().reverse().map((post) => {
             return <Post post={post} key={post._id} />;
           })
         )}

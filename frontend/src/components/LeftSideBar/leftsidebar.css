@@ -49,8 +49,10 @@
     border-right: solid 3px #ef8236;
 }
 
-@media (max-width:600px) {
+@media (max-width:820px) {
   .left-sidebar{
     display: none;
   }
 }
+
+

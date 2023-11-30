@@ -11,6 +11,7 @@ const AskQuestion = () => {
 
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
+  const activeUsername = User?.result.name;
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -24,14 +25,22 @@ const AskQuestion = () => {
               questionBody,
               questionTags,
               userPosted: User.result.name,
+              userId: User.result._id,
             },
             navigate
           )
         );
-        
       } else alert("Please enter all the fields");
     } else alert("Login to ask question");
+
+    //notifiaction
+    if (Notification.permission === "granted") {
+      new Notification("New Question", {
+        body: `${activeUsername} asked a question`,
+      });
+    }
   };
+
   const handleEnter = (e) => {
     if (e.code === "Enter") {
       setQuestionBody(questionBody + "\n");

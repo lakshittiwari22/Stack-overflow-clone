@@ -4,7 +4,7 @@ import Questions from "./Questions";
 const QuestionList = ({ questionsList }) => {
   return (
     <>
-      {questionsList.map((question) => (
+      {questionsList.slice().reverse().map((question) => (
         <Questions question={question} key={question._id} />
       ))}
     </>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import copy from "copy-to-clipboard";
 import {
   faShare,
   faThumbsUp,
@@ -11,21 +12,42 @@ import {
 import moment from "moment";
 
 import Avatar from "../../components/Avatar/Avatar";
-
 import { LikePublicPost } from "../../actions/post";
+import icon from "../../assets/stack-overflow.png";
 
 const Post = ({ post }) => {
   let User = useSelector((state) => state.currentUserReducer);
+  const url = "localhost:3000";
 
   const id = post._id;
+  const activeUsername = User?.result.name;
 
   const [like, setLike] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLikes = () => {
     dispatch(LikePublicPost(id, User.result._id));
+    //   if(like !== true){
+    //   if (Notification.permission === 'granted') {
+    //     new Notification('Like', {
+    //       body: `${activeUsername} liked your post`,
+    //       icon: {icon},
+    //     });
+    //   }
+    // }
+
     setLike(!like);
   };
+
+  const handleShare = () => {
+    copy(url + location.pathname);
+    alert("copied to clipboard");
+  };
+
+  const userLiked = post.likes.findIndex((id) => User.result._id === id);
+  console.log(userLiked);
 
   return (
     <div className="display-post">
@@ -53,19 +75,29 @@ const Post = ({ post }) => {
         </div>
       </div>
 
-      <div className="caption-container">
+      <div
+        className="caption-container"
+        onClick={() => navigate(`/Social/${post._id}`)}
+      >
         <p>{post.caption}</p>
       </div>
       <div
         className={
-          post.postImg
+          post.postMedia
             ? "post-image-container"
             : "post-image-container-inactive"
         }
       >
-        <Link to={`/Social/${post._id}`}>
-          <img src={post.postImg} alt="displayImg" />
-        </Link>
+        {post.contentType === "image" ? (
+          <Link to={`/Social/${post._id}`}>
+            <img src={post.postMedia} alt="displayImg" />
+          </Link>
+        ) : post.contentType === "video" ? (
+          <video width="100%" height="100%" controls>
+            <source src={post.postMedia} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : null}
       </div>
       <div className="post-details-container">
         <p style={{ fontSize: "12px", color: "slateGray" }}>
@@ -81,7 +113,7 @@ const Post = ({ post }) => {
 
       <div className="post-btn">
         <button
-          className={!like ? "like-btn" : "like-btn-active"}
+          className={userLiked === -1 ? "like-btn" : "like-btn-active"}
           onClick={handleLikes}
         >
           <FontAwesomeIcon icon={faThumbsUp} className="btn-icon" />
@@ -94,7 +126,7 @@ const Post = ({ post }) => {
           </button>
         </Link>
 
-        <button className="share-btn">
+        <button className="share-btn" onClick={handleShare}>
           <FontAwesomeIcon icon={faShare} className="btn-icon" />
           <p>share</p>
         </button>

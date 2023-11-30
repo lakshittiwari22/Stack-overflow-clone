@@ -30,3 +30,20 @@
 
   
 }
+
+@media (min-width: 601px) and (max-width: 820px) {
+  
+  .home-container-2{
+    width: 100%;
+    padding: 24px 14px 0 14px;
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.home-container-2 .users-heading{
+ 
+  height: 50px;
+}
+
+}

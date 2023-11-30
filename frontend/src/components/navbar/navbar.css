@@ -17,14 +17,14 @@
 
 .navbar {
   height: 100%;
-  min-width: 85%;
+  min-width: 90%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .nav-logo {
-  padding: 5px 25px;
+  padding: 5px 0;
 }
 
 img {
@@ -55,9 +55,8 @@ img {
   flex-grow: 1;
   padding: 0px 12px;
   position: relative;
+  margin-right: 5px;
 }
-
-
 
 .navbar form input {
   min-width: 90%;
@@ -116,7 +115,7 @@ img {
 @media (max-width: 600px) {
   .main-nav {
     width: 100%;
-    height: 6.5vh;
+    height: 60px;
     box-shadow: none;
     border-bottom: 1px solid #d3e4eb;
   }
@@ -171,11 +170,10 @@ img {
     padding: 7px 13px;
     border-radius: 5px;
     cursor: pointer;
-    color:  #636b74;
-    
+    color: #636b74;
   }
 
-  .nav-btn-mobile:hover{
+  .nav-btn-mobile:hover {
     background-color: #e1ecf4;
   }
 
@@ -206,12 +204,11 @@ img {
     display: block;
     position: absolute;
     top: 20px;
-    padding-left: 10px;
     left: -100%;
     background-color: #f8f9f9;
     box-shadow: 0px 1px 5px #00000033;
     width: 50vw;
-    height: 50vh;
+    height: 55vh;
     z-index: 1;
     margin-left: 0;
     transition: 0.3s;
@@ -219,5 +216,112 @@ img {
 
   .slide {
     left: 0;
+  }
+
+  .menu-nav div {
+    padding-left: 5px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 820px) {
+  .navbar {
+    width: 98%;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .nav-bar-mobile {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .menubar {
+    display: block;
+    cursor: pointer;
+  }
+
+  .menubar-icon {
+    width: 23px;
+    height: 23px;
+    margin-right: 3px;
+    color: #636b74;
+  }
+
+  .closing-icon {
+    display: block;
+    width: 23px;
+    height: 23px;
+    margin-right: 3px;
+    color: #636b74;
+  }
+
+  .navbar form {
+    
+    margin-right: 15px;
+  }
+  .search-bar {
+    display: block;
+    margin-right: 20px;
+  }
+
+  .nav-btn-mobile {
+    display: block;
+    border: none;
+    padding: 7px 13px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #636b74;
+  }
+
+  .nav-btn-mobile:hover {
+    background-color: #e1ecf4;
+  }
+
+  .stackoverflow-icon {
+    display: block;
+    height: 34px;
+    width: 34px;
+    margin-left: 5px;
+  }
+
+  .sidebar {
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: -100%;
+    background-color: #f8f9f9;
+    box-shadow: 0px 1px 5px #00000033;
+    width: 200px;
+    height: 400px;
+    z-index: 1;
+    margin-left: 0;
+    transition: 0.3s;
+  }
+
+  .slide {
+    left: 0;
+  }
+}
+
+@media (min-width: 821px) and (max-width: 1020px) {
+  .navbar {
+    height: 100%;
+    min-width: 95%;
+  }
+
+  .nav-logo {
+    padding: 5px 0px;
+  }
+  .navbar form {
+    
+    margin-right: 20px;
+  }
+  .search-bar {
+    display: block;
+    margin-right: 20px;
   }
 }

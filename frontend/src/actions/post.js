@@ -50,4 +50,16 @@ export const postComment = ( id,commentBody, noOfComments, userCommented, userId
   }
 }
 
+export const deleteComment =
+  (id, commentId, noOfComments) => async (dispatch) => {
+    try {
+      const { data } = await api.deleteComment(id, commentId, noOfComments)
+      dispatch(FetchAllPosts())
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 

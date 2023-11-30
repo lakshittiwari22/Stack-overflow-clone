@@ -8,10 +8,12 @@ import { CreatePublicPost } from "../../actions/post";
 
 const AddPostPopup = ({ trigger, setTrigger }) => {
   let User = useSelector((state) => state.currentUserReducer);
-  const [image, setImage] = useState("");
+  const [mediaType, setMediaType] = useState(""); // Added state to track media type
+  const [media, setMedia] = useState("");
   const [caption, setCaption] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const activeUsername = User?.result.name;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +23,8 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
           CreatePublicPost(
             {
               caption,
-              postImg: image,
+              postMedia: media,
+              contentType: mediaType,
               userPosted: User.result.name,
               userId: User.result._id,
             },
@@ -31,19 +34,38 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
         setTrigger(!trigger);
       } else alert("Enter Caption!");
     } else alert("Login to Post");
+
+    if (Notification.permission === "granted") {
+      new Notification("New Post", {
+        body: `${activeUsername} created a new post`,
+      });
+    }
+
+    setMedia("");
+    setMediaType("");
+    setCaption("");
   };
 
   const convertToBase64 = (e) => {
-    
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      console.log(reader.result); //base64encoded string
-      setImage(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log("Error ", error);
-    };
+    const file = e.target.files[0];
+
+    if (file) {
+      // Check file type based on extension
+      const fileType = file.type.split("/")[0];
+
+      // Set media type state
+      setMediaType(fileType);
+
+      // Read the file as base64
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setMedia(reader.result);
+      };
+      reader.onerror = (error) => {
+        console.log("Error ", error);
+      };
+    }
   };
 
   return trigger ? (
@@ -74,15 +96,14 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
             borderRadius="50%"
             color="white"
           >
-           
             <Link
-                  to={`/Users/${User?.result._id}`}
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  {User?.result.name.charAt(0)}
-                </Link>
+              to={`/Users/${User?.result._id}`}
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              {User?.result.name.charAt(0)}
+            </Link>
           </Avatar>
-          <p style={{fontWeight:"bold"}}>{User?.result.name}</p>
+          <p style={{ fontWeight: "bold" }}>{User?.result.name}</p>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="input-container">
@@ -90,6 +111,7 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
               type="text"
               placeholder="What's on your mind"
               id="popup-input"
+              value={caption}
               onChange={(e) => {
                 setCaption(e.target.value);
               }}
@@ -108,13 +130,22 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
             </label>
             <input
               type="file"
-              accept="image/*"
+              accept="image/*,video/*"
               id="upload-img"
               hidden
               onChange={convertToBase64}
             />
-            {image && <img src={image} alt="" />}
-            
+            {/* Conditionally render the media based on type */}
+            {mediaType === "image" && media && (
+              <img src={media} alt="Uploaded Image" />
+            )}
+
+            {mediaType === "video" && media && (
+              <video width="320" height="240" controls>
+                <source src={media} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
           </div>
 
           <div className="popup-btn">

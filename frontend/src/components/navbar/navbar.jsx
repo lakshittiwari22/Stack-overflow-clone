@@ -107,8 +107,8 @@ const Navbar = () => {
             For Teams
           </Link>
 
-          <form className="mobile">
-            <input type="text" placeholder="Seacrh..." />
+          <form className="mobile search-bar">
+            <input type="text" placeholder="Search..." />
             <img
               src={search}
               alt="search icon"
