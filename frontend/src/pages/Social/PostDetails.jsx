@@ -14,6 +14,7 @@ import Avatar from "../../components/Avatar/Avatar";
 import DisplayComments from "./DisplayComments";
 import { useDispatch, useSelector } from "react-redux";
 import { LikePublicPost, deletePost, postComment } from "../../actions/post";
+import moment from "moment";
 
 const PostDetails = () => {
 
@@ -113,7 +114,7 @@ const PostDetails = () => {
                 <div className="username-container-2">
                   <div style={{ fontWeight: "bold" }}>{post.userPosted}</div>
                   <div style={{ color: "#8d949e", fontSize: "13px" }}>
-                    <span>21 nov</span> . <FontAwesomeIcon icon={faEarthAsia} />
+                    <span>{moment(post.postedOn).fromNow()}</span> . <FontAwesomeIcon icon={faEarthAsia} />
                   </div>
                 </div>
               </div>

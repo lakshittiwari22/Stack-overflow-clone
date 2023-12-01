@@ -1,5 +1,6 @@
 import Posts from "../models/Post.js";
 import mongoose from "mongoose";
+import { emitNewPostNotification } from "../sockets/socket.js";
 
 export const createPost = async (req, res) => {
   const createPostData = req.body;
@@ -9,6 +10,7 @@ export const createPost = async (req, res) => {
 
   try {
     await createPost.save();
+    emitNewPostNotification();
     res.status(200).json("Posted a public post successfully");
   } catch (error) {
     console.log(error);
@@ -42,7 +44,6 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
   const { id: _id, userId } = req.body;
-  
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("question unavailable..");

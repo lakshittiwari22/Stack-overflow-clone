@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import copy from "copy-to-clipboard";
+import io from "socket.io-client";
 import {
   faShare,
   faThumbsUp,
@@ -16,6 +17,28 @@ import { LikePublicPost } from "../../actions/post";
 import icon from "../../assets/stack-overflow.png";
 
 const Post = ({ post }) => {
+  useEffect(() => {
+    const socket = io("http://localhost:5000");
+    socket.connect();
+  
+    // Listen for 'newPostNotification' event from the server
+    socket.once("newPostNotification", (data) => {
+     if(data){
+      if (Notification.permission === 'granted') {
+        new Notification('Post', {
+          body: `${activeUsername} created a new post`,
+          icon: {icon},
+        });
+      }
+     }
+    });
+
+    return () => {
+      // Disconnect the socket when the component unmounts
+      socket.disconnect();
+    };
+  }, []);
+
   let User = useSelector((state) => state.currentUserReducer);
   const url = "localhost:3000";
 
@@ -29,14 +52,7 @@ const Post = ({ post }) => {
 
   const handleLikes = () => {
     dispatch(LikePublicPost(id, User.result._id));
-    //   if(like !== true){
-    //   if (Notification.permission === 'granted') {
-    //     new Notification('Like', {
-    //       body: `${activeUsername} liked your post`,
-    //       icon: {icon},
-    //     });
-    //   }
-    // }
+     
 
     setLike(!like);
   };
@@ -47,7 +63,7 @@ const Post = ({ post }) => {
   };
 
   const userLiked = post.likes.findIndex((id) => User.result._id === id);
-  console.log(userLiked);
+  
 
   return (
     <div className="display-post">
