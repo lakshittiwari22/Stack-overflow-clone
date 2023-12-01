@@ -1,14 +1,17 @@
 import Questions from "../models/Questions.js";
 import mongoose from "mongoose";
+import { emitNewQuestionNotification } from "../sockets/socket.js";
 
 export const AskQuestion = async (req, res) => {
   const postQuestionData = req.body;
+  const userPosted = postQuestionData.userPosted;
   const postQuestion = new Questions({
     ...postQuestionData,
   });
 
   try {
     await postQuestion.save();
+    emitNewQuestionNotification(userPosted);
     res.status(200).json("Posted a question successfully");
   } catch (error) {
     console.log(error);

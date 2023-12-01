@@ -21,8 +21,14 @@ export const initializeWebSocket = (httpServer) => {
   });
 };
 
-export const emitNewPostNotification = () => {
+export const emitNewPostNotification = (userPosted) => {
   if (io) {
-    io.emit("newPostNotification", { message: "New post available!" });
+    io.emit("newPostNotification", { message: userPosted });
+  }
+};
+
+export const emitNewQuestionNotification = (userPosted) => {
+  if (io) {
+    io.emit("newQuestionNotification", { message: userPosted });
   }
 };

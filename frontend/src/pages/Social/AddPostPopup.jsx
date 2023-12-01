@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../../components/Avatar/Avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faPhotoFilm } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
+import io from "socket.io-client";
 import { CreatePublicPost } from "../../actions/post";
+import socket from "../../Socket";
 
 const AddPostPopup = ({ trigger, setTrigger }) => {
   let User = useSelector((state) => state.currentUserReducer);
@@ -34,12 +36,6 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
         setTrigger(!trigger);
       } else alert("Enter Caption!");
     } else alert("Login to Post");
-
-    if (Notification.permission === "granted") {
-      new Notification("New Post", {
-        body: `${activeUsername} created a new post`,
-      });
-    }
 
     setMedia("");
     setMediaType("");

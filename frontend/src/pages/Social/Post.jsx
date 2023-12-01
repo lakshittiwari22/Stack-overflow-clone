@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import copy from "copy-to-clipboard";
-import io from "socket.io-client";
+import socket from "../../Socket";
 import {
   faShare,
   faThumbsUp,
@@ -18,24 +18,24 @@ import icon from "../../assets/stack-overflow.png";
 
 const Post = ({ post }) => {
   useEffect(() => {
-    const socket = io("http://localhost:5000");
-    socket.connect();
-  
+    //  "http://localhost:5000"
+    //"https://stack-overflow-clone-server-ebfz.onrender.com"
+
     // Listen for 'newPostNotification' event from the server
-    socket.once("newPostNotification", (data) => {
-     if(data){
-      if (Notification.permission === 'granted') {
-        new Notification('Post', {
-          body: `${activeUsername} created a new post`,
-          icon: {icon},
-        });
+    socket.on("newPostNotification", (data) => {
+      if (data) {
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${data.message} created a new post`,
+            icon: { icon },
+          });
+        }
       }
-     }
     });
 
     return () => {
       // Disconnect the socket when the component unmounts
-      socket.disconnect();
+      socket.off("newPostNotification");
     };
   }, []);
 
@@ -52,7 +52,6 @@ const Post = ({ post }) => {
 
   const handleLikes = () => {
     dispatch(LikePublicPost(id, User.result._id));
-     
 
     setLike(!like);
   };
@@ -63,7 +62,6 @@ const Post = ({ post }) => {
   };
 
   const userLiked = post.likes.findIndex((id) => User.result._id === id);
-  
 
   return (
     <div className="display-post">

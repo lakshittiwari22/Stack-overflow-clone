@@ -1,10 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./askquestion.css";
 import { AskPublicQuestion } from "../../actions/question";
+import socket from "../../Socket";
 
 const AskQuestion = () => {
+
+  useEffect(() => {
+    //  "http://localhost:5000"
+    //"https://stack-overflow-clone-server-ebfz.onrender.com"
+   
+
+    // Listen for 'newPostNotification' event from the server
+    socket.on("newQuestionNotification", (data) => {
+      console.log(data.message);
+      if (data) {
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${data.message} posted a new question`,
+            // icon: { icon },
+          });
+        }
+      }
+    });
+
+    return () => {
+      // Disconnect the socket when the component unmounts
+      socket.off("newQuestionNotification");
+    };
+  }, []);
+
+
   const [questionTitle, setQuestionTitle] = useState("");
   const [questionBody, setQuestionBody] = useState("");
   const [questionTags, setQuestionTags] = useState("");
@@ -32,13 +59,6 @@ const AskQuestion = () => {
         );
       } else alert("Please enter all the fields");
     } else alert("Login to ask question");
-
-    //notifiaction
-    if (Notification.permission === "granted") {
-      new Notification("New Question", {
-        body: `${activeUsername} asked a question`,
-      });
-    }
   };
 
   const handleEnter = (e) => {

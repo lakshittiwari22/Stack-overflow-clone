@@ -1,35 +1,58 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import notificationIcon from '../../assets/globe.svg'
-import "./homemainbar.css";
-import QuestionList from "./QuestionList";
+import io from "socket.io-client";
 import { useSelector } from "react-redux";
 
+import "./homemainbar.css";
+import QuestionList from "./QuestionList";
+import socket from "../../Socket";
+
 const HomeMainBar = () => {
- 
-  if ('Notification' in window) {
+  if ("Notification" in window) {
     // Request permission to show notifications
     Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
+      if (permission === "granted") {
         console.log("permission granted");
-      }else{
+      } else {
         console.log("permission not granted");
       }
     });
   }
-  
 
-  const user = 1;
+  // useEffect(() => {
+  //   //  "http://localhost:5000"
+  //   //"https://stack-overflow-clone-server-ebfz.onrender.com"
+   
+
+  //   // Listen for 'newPostNotification' event from the server
+  //   socket.on("newQuestionNotification", (data) => {
+  //     console.log(data.message);
+  //     // if (data) {
+  //     //   if (Notification.permission === "granted") {
+  //     //     new Notification("Post", {
+  //     //       body: `${data.message} posted a new question`,
+  //     //       // icon: { icon },
+  //     //     });
+  //     //   }
+  //     // }
+  //   });
+
+  //   return () => {
+  //     // Disconnect the socket when the component unmounts
+  //     socket.off("newQuestionNotification");
+  //   };
+  // }, []);
+
+  let User = useSelector((state) => state.currentUserReducer);
 
   const navigate = useNavigate();
 
   const location = useLocation();
 
-  const questionsList = useSelector(state => state.questionsReducer)
-  
+  const questionsList = useSelector((state) => state.questionsReducer);
 
   const checkAuth = () => {
-    if (user === null) {
+    if (User === null) {
       alert("login or signup to ask aquestion");
       navigate("/Auth");
     } else {
@@ -49,7 +72,6 @@ const HomeMainBar = () => {
         <button onClick={checkAuth} className="ask-btn">
           Ask Question
         </button>
-        
       </div>
       <div>
         {questionsList.data === null ? (

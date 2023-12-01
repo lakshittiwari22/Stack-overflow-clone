@@ -4,13 +4,14 @@ import { emitNewPostNotification } from "../sockets/socket.js";
 
 export const createPost = async (req, res) => {
   const createPostData = req.body;
+  const userPosted = createPostData.userPosted;
   const createPost = new Posts({
     ...createPostData,
   });
 
   try {
     await createPost.save();
-    emitNewPostNotification();
+    emitNewPostNotification(userPosted);
     res.status(200).json("Posted a public post successfully");
   } catch (error) {
     console.log(error);
