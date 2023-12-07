@@ -53,7 +53,7 @@ export const signUpGoogle = async (req, res) => {
         const email = response.data.email;
         const picture = response.data.picture;
         const googleID = response.data.sub;
-        
+
         const existinguser = await User.findOne({ email });
 
         if (existinguser) {
@@ -64,13 +64,14 @@ export const signUpGoogle = async (req, res) => {
               expiresIn: "1h",
             }
           );
-          console.log("welcome back");
+
           res.status(200).json({ result: existinguser, token });
         } else {
           const newUser = await User.create({
             name: firstName,
             email,
             googleID: googleID,
+            profileImg: picture,
           });
           console.log("new user created");
           const token = jwt.sign(

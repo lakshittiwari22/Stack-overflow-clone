@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import EditProfileForm from "./EditProfileForm";
 import ProfileBio from "./ProfileBio";
-import './userProfile.css'
+import "./userProfile.css";
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -19,9 +19,7 @@ const UserProfile = () => {
   const currentUser = useSelector((state) => state.currentUserReducer);
   
 
-  const [Switch, setSwitch] = useState(false)
-
-  
+  const [Switch, setSwitch] = useState(false);
 
   return (
     <div className="home-container-1">
@@ -30,14 +28,12 @@ const UserProfile = () => {
         <section>
           <div className="user-details-container">
             <div className="user-details">
-              <Avatar
-                backgroundColor="purple"
-                color="white"
-                fontSize="50px"
-                px="40px"
-                py="30px"
-              >
-                {currentProfile?.name.charAt(0).toUpperCase()}
+              <Avatar backgroundColor='purple' borderRadius='10px' color="white" fontSize="50px" px="90px" py="100px">
+                {currentProfile?.profileImg !== "" ? (
+                  <img src={currentProfile?.profileImg} alt="profile-pictures" />
+                ) : (
+                  <p>{currentProfile?.name.charAt(0)}</p>
+                )}
               </Avatar>
               <div className="user-name">
                 <h1>{currentProfile?.name}</h1>
@@ -59,13 +55,14 @@ const UserProfile = () => {
             )}
           </div>
           <>
-          {
-            Switch? (
-                <EditProfileForm currentUser ={currentUser} setSwitch = {setSwitch}/>
-            ):(
-                <ProfileBio currentProfile = {currentProfile} />
-            )
-          }
+            {Switch ? (
+              <EditProfileForm
+                currentUser={currentUser}
+                setSwitch={setSwitch}
+              />
+            ) : (
+              <ProfileBio currentProfile={currentProfile} />
+            )}
           </>
         </section>
       </div>

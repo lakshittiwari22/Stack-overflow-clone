@@ -5,7 +5,7 @@ import globe from "../../assets/globe.svg";
 import { useSelector } from "react-redux";
 
 const Menubar = ({ slide }) => {
-  const navigate = useNavigate();
+  
   let User = useSelector((state) => state.currentUserReducer);
 
   const handleSlide = () => {};

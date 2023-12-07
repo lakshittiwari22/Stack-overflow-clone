@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/auth.js";
+import axios from "axios";
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -12,6 +13,7 @@ export const getAllUsers = async (req, res) => {
         name: user.name,
         about: user.about,
         tags: user.tags,
+        profileImg : user.profileImg,
         joinedOn: user.joinedOn,
       });
     });
@@ -23,7 +25,7 @@ export const getAllUsers = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   const { id: _id } = req.params;
-  const { name, about, tags } = req.body;
+  const { name, about, tags, profileImg } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("question unavailable..");
@@ -33,7 +35,7 @@ export const updateProfile = async (req, res) => {
     const updatedProfile = await User.findByIdAndUpdate(
       _id,
       {
-        $set: { name: name, about: about, tags: tags },
+        $set: { name: name, about: about, tags: tags, profileImg: profileImg },
       },
       { new: true } // 'new' parameter is used so as to get an record from the database
     );
@@ -42,3 +44,11 @@ export const updateProfile = async (req, res) => {
     res.status(405).json({ message: error.message });
   }
 };
+
+
+export const getAvatars = () => {
+
+}
+
+
+

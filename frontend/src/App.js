@@ -7,16 +7,24 @@ import { useEffect } from "react";
 import { fetchAllQuestions } from "./actions/question";
 import { fetchAllUsers } from "./actions/users";
 import { FetchAllPosts } from "./actions/post";
-import { io } from "socket.io-client";
+
 import socket from "./Socket";
 
 function App() {
   const dispatch = useDispatch();
+  if ("Notification" in window) {
+    // Request permission to show notifications
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        console.log("permission granted");
+      } else {
+        console.log("permission not granted");
+      }
+    });
+  }
   //"http://localhost:5000"
   //"https://stack-overflow-clone-server-ebfz.onrender.com"
   useEffect(() => {
-    
-
     // Listen for 'newPostNotification' event from the server
     socket.once("newPostNotification", (data) => {
       if (data) {

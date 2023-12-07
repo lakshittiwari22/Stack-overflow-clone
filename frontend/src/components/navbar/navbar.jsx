@@ -27,11 +27,14 @@ const Navbar = () => {
   // seletes a particular reducer and fetches data
 
   let User = useSelector((state) => state.currentUserReducer);
+  let allUsers = useSelector((state) => state.usersReducer)
+  const currentUser = allUsers?.filter((user) => user._id === User?.result?._id)[0]
 
+  
   const handleLogout = () => {
     googleLogout();
     dispatch({ type: "LOGOUT" });
-    
+
     navigate("/");
     dispatch(setCurrentUser(null));
   };
@@ -47,7 +50,7 @@ const Navbar = () => {
     if (token) {
       const decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) {
-        alert("Token expired! You have been logged out")
+        alert("Token expired! You have been logged out");
         handleLogout();
       }
     }
@@ -135,17 +138,22 @@ const Navbar = () => {
               />
               <Avatar
                 backgroundColor="#009dff"
-                px="10px"
-                py="7px"
+                px="30px"
+                py="30px"
                 borderRadius="50%"
                 color="white"
               >
-                <Link
-                  to={`/Users/${User?.result._id}`}
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  {User.result.name.charAt(0)}
-                </Link>
+                {currentUser?.profileImg !== '' ? (
+                  <img
+                    src={currentUser?.profileImg}
+                    alt="profile-pictures"
+                    onClick={() => navigate(`/Users/${currentUser?._id}`)}
+                  />
+                ) : (
+                  <p onClick={() => navigate(`/Users/${currentUser?._id}`)}>
+                    {User?.result.name.charAt(0)}
+                  </p>
+                )}
               </Avatar>
 
               <button className="nav-item nav-links" onClick={handleLogout}>

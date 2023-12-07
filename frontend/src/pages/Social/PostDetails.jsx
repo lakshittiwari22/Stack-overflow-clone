@@ -17,7 +17,6 @@ import { LikePublicPost, deletePost, postComment } from "../../actions/post";
 import moment from "moment";
 
 const PostDetails = () => {
-
   useEffect(() => {
     // Scroll to the top of the page when the component mounts
     window.scrollTo(0, 0);
@@ -28,8 +27,13 @@ const PostDetails = () => {
 
   const posts = useSelector((state) => state.postReducer);
   let User = useSelector((state) => state.currentUserReducer);
+  const users = useSelector((state) => state.usersReducer);
 
   const singlePost = posts.data?.filter((post) => post._id === id);
+  const postProfile = users.filter(
+    (user) => user._id === singlePost[0].userId
+  )[0];
+  
 
   // defining variable for changing the css class of like button
   const userLiked = singlePost?.map((post) => {
@@ -99,22 +103,28 @@ const PostDetails = () => {
               <div className="username-container">
                 <Avatar
                   backgroundColor="#009dff"
-                  px="20px"
-                  py="0px"
+                  px="40px"
+                  py="40px"
                   borderRadius="50%"
                   color="white"
                 >
-                  <Link
-                    to={`/Users/${post?.userId}`}
-                    style={{ textDecoration: "none", color: "white" }}
-                  >
-                    <p>{post?.userPosted.charAt(0)}</p>
-                  </Link>
+                  {postProfile.profileImg !== "" ? (
+                    <img
+                      src={postProfile?.profileImg}
+                      alt="profile-picture"
+                      onClick={() => navigate(`/Users/${post?.userId}`)}
+                    />
+                  ) : (
+                    <p onClick={() => navigate(`/Users/${post?.userId}`)}>
+                      {postProfile.name.charAt(0)}
+                    </p>
+                  )}
                 </Avatar>
                 <div className="username-container-2">
                   <div style={{ fontWeight: "bold" }}>{post.userPosted}</div>
                   <div style={{ color: "#8d949e", fontSize: "13px" }}>
-                    <span>{moment(post.postedOn).fromNow()}</span> . <FontAwesomeIcon icon={faEarthAsia} />
+                    <span>{moment(post.postedOn).fromNow()}</span> .{" "}
+                    <FontAwesomeIcon icon={faEarthAsia} />
                   </div>
                 </div>
               </div>
@@ -194,17 +204,19 @@ const PostDetails = () => {
                   <div className="avatar-container">
                     <Avatar
                       backgroundColor="#009dff"
-                      px="20px"
-                      py="0px"
+                      px="40px"
+                      py="40px"
                       borderRadius="50%"
                       color="white"
                     >
-                      <Link
-                        to={`/Users/${User?.result._id}`}
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
+                      {User?.result.profileImg !== "" ? (
+                        <img
+                          src={User?.result.profileImg}
+                          alt="profile-image"
+                        />
+                      ) : (
                         <p>{User?.result.name.charAt(0)}</p>
-                      </Link>
+                      )}
                     </Avatar>
                   </div>
                   <form onSubmit={(e) => handleSubmit(e, post.comments.length)}>

@@ -19,6 +19,7 @@ import Avatar from "../../components/Avatar/Avatar";
 const QuestionDetails = () => {
   const { id } = useParams();
   const User = useSelector((state) => state.currentUserReducer);
+  const allUsers = useSelector((state) => state.usersReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [answer, setAnswer] = useState(" ");
@@ -48,7 +49,7 @@ const QuestionDetails = () => {
       }
     }
     setAnswer("");
-    console.log("Textarea reset:", answer);
+    
   };
 
   const handleShare = () => {
@@ -70,6 +71,12 @@ const QuestionDetails = () => {
   };
 
   const questionsList = useSelector((state) => state.questionsReducer);
+  const displayQuestion = questionsList?.data?.filter(
+    (question) => question._id === id
+  )[0];
+  const userQuestioned = allUsers?.filter(
+    (user) => user._id === displayQuestion?.userId
+  )[0];
 
   return (
     <div className="question-details-page">
@@ -127,8 +134,19 @@ const QuestionDetails = () => {
                             className="user-link"
                             style={{ color: "#0086d8" }}
                           >
-                            <Avatar backgroundColor="orange" px="8px" py="5px">
-                              {question.userPosted.charAt(0).toUpperCase()}
+                            <Avatar
+                              backgroundColor="orange"
+                              px="30px"
+                              py="30px"
+                            >
+                              {userQuestioned?.profileImg !== "" ? (
+                                <img
+                                  src={userQuestioned?.profileImg}
+                                  alt="Dp"
+                                />
+                              ) : (
+                                <p>{userQuestioned?.name.charAt(0)}</p>
+                              )}
                             </Avatar>
                             <div>{question.userPosted}</div>
                           </Link>

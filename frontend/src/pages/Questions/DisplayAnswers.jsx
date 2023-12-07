@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 
@@ -8,6 +8,12 @@ import "./questionspage.css";
 import { deleteAnswer } from "../../actions/question";
 
 const DisplayAnswers = ({ question, handleShare, User }) => {
+  let allUsers = useSelector((state) => state.usersReducer);
+  const userWhoAnswered = allUsers?.filter(
+    (user) => user._id === User?.result?._id
+  )[0];
+  
+
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -42,8 +48,12 @@ const DisplayAnswers = ({ question, handleShare, User }) => {
                 className="user-link"
                 style={{ color: "#0086d8" }}
               >
-                <Avatar backgroundColor="green" px="8px" py="5px">
-                  {ans.userAnswered.charAt(0).toUpperCase()}
+                <Avatar backgroundColor="lightGreen" borderRadius='5px' px="30px" py="30px">
+                  {userWhoAnswered?.profileImg !== "" ? (
+                    <img src={userWhoAnswered?.profileImg} alt="Dp" />
+                  ) : (
+                    <p>{userWhoAnswered?.name.chatAt(0)}</p>
+                  )}
                 </Avatar>
                 <div>{ans.userAnswered}</div>
               </Link>

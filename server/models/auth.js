@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema({
     },
   },
   googleID: { type: String },
+  profileImg : { type: String, default: '' },
   about: { type: String },
   tags: { type: [String] },
   joinedOn: { type: Date, default: Date.now },

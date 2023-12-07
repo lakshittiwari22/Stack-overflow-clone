@@ -1,11 +1,11 @@
 // || "https://stack-overflow-clone-server-ebfz.onrender.com"
 
-// 
+// "http://localhost:5000"
 
 import axios from "axios";
 
 const API = axios.create({
-  baseURL:  "http://localhost:5000" ,
+  baseURL: "http://localhost:5000" ,
 });
 
 // sending users token  for each and every request to the database(backend)

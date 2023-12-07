@@ -2,8 +2,10 @@ import React from "react";
 import "./leftsidebar.css";
 import { NavLink } from "react-router-dom";
 import globe from "../../assets/globe.svg";
+import { useSelector } from "react-redux";
 
 const LeftSideBar = () => {
+  let User = useSelector((state) => state.currentUserReducer);
   return (
     <div className="left-sidebar">
       <nav className="side-nav">
@@ -42,7 +44,7 @@ const LeftSideBar = () => {
           </NavLink>
 
           <NavLink
-            to="/Social"
+            to={User ? "/Social" : "/Auth"}
             className="side-nav-links"
             activeclassname="active"
             style={{ paddingLeft: "40px" }}

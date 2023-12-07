@@ -10,12 +10,13 @@ import socket from "../../Socket";
 
 const AddPostPopup = ({ trigger, setTrigger }) => {
   let User = useSelector((state) => state.currentUserReducer);
+  let allUsers = useSelector((state) => state.usersReducer)
+  const currentUser = allUsers?.filter((user) => user._id === User?.result?._id)[0]
   const [mediaType, setMediaType] = useState(""); // Added state to track media type
   const [media, setMedia] = useState("");
   const [caption, setCaption] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const activeUsername = User?.result.name;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,17 +88,22 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
         <div className="user-container">
           <Avatar
             backgroundColor="#009dff"
-            px="20px"
-            py="14px"
+            px="40px"
+            py="40px"
             borderRadius="50%"
             color="white"
           >
-            <Link
-              to={`/Users/${User?.result._id}`}
-              style={{ textDecoration: "none", color: "white" }}
-            >
-              {User?.result.name.charAt(0)}
-            </Link>
+            {currentUser?.profileImg !== "" ? (
+              <img
+                src={currentUser?.profileImg}
+                alt="profile-pictures"
+                onClick={() => navigate(`/Users/${User?.result._id}`)}
+              />
+            ) : (
+              <p onClick={() => navigate(`/Users/${User?.result._id}`)}>
+                {currentUser?.name.charAt(0)}
+              </p>
+            )}
           </Avatar>
           <p style={{ fontWeight: "bold" }}>{User?.result.name}</p>
         </div>

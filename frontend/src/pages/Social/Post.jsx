@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import copy from "copy-to-clipboard";
-import socket from "../../Socket";
+// import socket from "../../Socket";
 import {
   faShare,
   faThumbsUp,
@@ -14,36 +14,26 @@ import moment from "moment";
 
 import Avatar from "../../components/Avatar/Avatar";
 import { LikePublicPost } from "../../actions/post";
-import icon from "../../assets/stack-overflow.png";
 
 const Post = ({ post }) => {
-  useEffect(() => {
-    //  "http://localhost:5000"
-    //"https://stack-overflow-clone-server-ebfz.onrender.com"
+  // useEffect(() => {
+  //   //  "http://localhost:5000"
+  //   //"https://stack-overflow-clone-server-ebfz.onrender.com"
 
-    // Listen for 'newPostNotification' event from the server
-    socket.on("newPostNotification", (data) => {
-      if (data) {
-        if (Notification.permission === "granted") {
-          new Notification("Post", {
-            body: `${data.message} created a new post`,
-            icon: { icon },
-          });
-        }
-      }
-    });
+  //   // Listen for 'newPostNotification' event from the server
 
-    return () => {
-      // Disconnect the socket when the component unmounts
-      socket.off("newPostNotification");
-    };
-  }, []);
+  //   return () => {
+  //     // Disconnect the socket when the component unmounts
+  //     // socket.off("newPostNotification");
+  //   };
+  // }, []);
 
   let User = useSelector((state) => state.currentUserReducer);
-  const url = "localhost:3000";
+  const users = useSelector((state) => state.usersReducer);
+  const postProfile = users?.filter((user) => user._id === post.userId)[0];
 
+  const url = "localhost:3000";
   const id = post._id;
-  const activeUsername = User?.result.name;
 
   const [like, setLike] = useState(false);
   const dispatch = useDispatch();
@@ -68,22 +58,25 @@ const Post = ({ post }) => {
       <div className="username-container">
         <Avatar
           backgroundColor="#009dff"
-          px="20px"
-          py="0px"
+          px="50px"
+          py="50px"
           borderRadius="50%"
           color="white"
         >
-          <Link
-            to={`/Users/${post?.userId}`}
-            style={{ textDecoration: "none", color: "white" }}
-          >
-            <p>{post.userPosted.charAt(0)}</p>
-          </Link>
+          {postProfile?.profileImg !== '' ? (
+            <img
+              src={postProfile?.profileImg}
+              alt="profile-picture"
+              onClick={() => navigate(`/Users/${post?.userId}`)}
+            />
+          ) : (
+            <p  onClick={() => navigate(`/Users/${post?.userId}`)}>{postProfile?.name.charAt(0)} </p>
+          )}
         </Avatar>
         <div className="username-container-2">
           <div style={{ fontWeight: "bold" }}>{post.userPosted}</div>
           <div style={{ color: "#8d949e", fontSize: "13px" }}>
-            <span>{moment(post.postedOn).fromNow()}</span> .{" "}
+            <span>{moment(post.postedOn).fromNow()}</span>.{" "}
             <FontAwesomeIcon icon={faEarthAsia} />
           </div>
         </div>

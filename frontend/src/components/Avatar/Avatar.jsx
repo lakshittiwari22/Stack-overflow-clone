@@ -13,7 +13,8 @@ const Avatar = ({
 }) => {
   const style = {
     backgroundColor,
-    padding: `${py} ${px}`,
+    width: px,
+    height: py,
     color: color || "black",
     borderRadius,
     fontSize,
@@ -23,8 +24,8 @@ const Avatar = ({
   };
 
   return (
-    <div style={style}>
-      <div className="inner">{children}</div>
+    <div style={style} className="avatar-outer">
+      {children}
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import io from "socket.io-client";
 import { useSelector } from "react-redux";
 
 import "./homemainbar.css";
@@ -8,40 +7,39 @@ import QuestionList from "./QuestionList";
 import socket from "../../Socket";
 
 const HomeMainBar = () => {
-  if ("Notification" in window) {
-    // Request permission to show notifications
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("permission granted");
-      } else {
-        console.log("permission not granted");
+ 
+
+  useEffect(() => {
+    // Listen for 'newPostNotification' event from the server
+    socket.on("newQuestionNotification", (data) => {
+      console.log(data.message);
+      if (data) {
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${data.message} posted a new question`,
+            // icon: { icon },
+          });
+        }
       }
     });
-  }
 
-  // useEffect(() => {
-  //   //  "http://localhost:5000"
-  //   //"https://stack-overflow-clone-server-ebfz.onrender.com"
-   
+    socket.on("newPostNotification", (data) => {
+      if (data) {
+        console.log(data.message);
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${data.message} created a new post`,
+            // icon: { icon },
+          });
+        }
+      }
+    });
 
-  //   // Listen for 'newPostNotification' event from the server
-  //   socket.on("newQuestionNotification", (data) => {
-  //     console.log(data.message);
-  //     // if (data) {
-  //     //   if (Notification.permission === "granted") {
-  //     //     new Notification("Post", {
-  //     //       body: `${data.message} posted a new question`,
-  //     //       // icon: { icon },
-  //     //     });
-  //     //   }
-  //     // }
-  //   });
-
-  //   return () => {
-  //     // Disconnect the socket when the component unmounts
-  //     socket.off("newQuestionNotification");
-  //   };
-  // }, []);
+    return () => {
+      // Disconnect the socket when the component unmounts
+      socket.off("newQuestionNotification");
+    };
+  }, []);
 
   let User = useSelector((state) => state.currentUserReducer);
 
