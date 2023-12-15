@@ -4,9 +4,9 @@ import Avatar from "../../components/Avatar/Avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faPhotoFilm } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import io from "socket.io-client";
+
 import { CreatePublicPost } from "../../actions/post";
-import socket from "../../Socket";
+
 
 const AddPostPopup = ({ trigger, setTrigger }) => {
   let User = useSelector((state) => state.currentUserReducer);
@@ -77,6 +77,7 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
             className="icon"
             onClick={() => {
               setTrigger(!trigger);
+              setMedia("");
             }}
           >
             <FontAwesomeIcon icon={faX} />
@@ -139,7 +140,7 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
             />
             {/* Conditionally render the media based on type */}
             {mediaType === "image" && media && (
-              <img src={media} alt="Uploaded Image" />
+              <img src={media} alt="Uploaded Image"  width="150" height="150" />
             )}
 
             {mediaType === "video" && media && (

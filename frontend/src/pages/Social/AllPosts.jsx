@@ -15,8 +15,10 @@ const AllPosts = () => {
   const [popup, setPopup] = useState(false);
   const navigate = useNavigate();
   let User = useSelector((state) => state.currentUserReducer);
-  let allUsers = useSelector((state) => state.usersReducer)
-  const currentUser = allUsers?.filter((user) => user._id === User?.result?._id)[0]
+  let allUsers = useSelector((state) => state.usersReducer);
+  const currentUser = allUsers?.filter(
+    (user) => user._id === User?.result?._id
+  )[0];
 
   const handleTrigger = () => {
     setPopup(!popup);
@@ -63,8 +65,7 @@ const AllPosts = () => {
             <Link
               style={{
                 textDecoration: "none",
-                color: "#3a3a3a",
-                fontWeight: "550",
+                color: 'var(--text-body-secondry)'
               }}
             >
               <p>Photo/video</p>

@@ -10,8 +10,8 @@ const Questions = ({ question }) => {
         <p>votes</p>
       </div>
       <div className="display-votes-ans">
-        <p>{question.no0fAnswers}</p>
-        <p>answers</p>
+        <p>{question.noOfAnswers}</p>
+        <p>{question.noOfAnswers === 1 ? 'answer' : 'answers'}</p>
       </div>
       <div className="display-questions-details">
         <Link to={`/Questions/${question._id}`} className="question-title-link">

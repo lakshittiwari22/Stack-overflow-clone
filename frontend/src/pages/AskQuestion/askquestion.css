@@ -1,11 +1,12 @@
 .ask-question {
   min-height: 100vh;
-  background-color: #f1f2f3;
+  background-color: var(--background-body-secondry);
 }
 
 .ask-ques-container {
   margin: auto;
   max-width: 1200px;
+  
 }
 
 .ask-ques-container h1 {
@@ -14,7 +15,7 @@
 
 .ask-ques-container form .ask-form-container {
   padding: 20px;
-  background-color: white;
+  background-color: var(--background-body-primary);
   border-radius: 3px;
   box-shadow: 0 10px 25px rgb(0 0 0 / 5%), 0 20px 48px rgb(0 0 0 / 5%),
     0 1px 4px rgb(0 0 0 / 10%);
@@ -33,7 +34,9 @@
 .ask-form-container label input,
 .ask-form-container label textarea {
   padding: 10px;
-  border: solid 1px #0000003e;
+  border: solid 1px var(--border-color);
+  background-color: var(--background-nav);
+  color: var(--text-body);
   font-family: "Roboto", sans-serif;
   width: calc(100% - 20px);
   resize: vertical;
@@ -44,7 +47,7 @@
   padding: 10px;
   background-color: #009bff;
   border: solid 1px #009dff;
-  color: white;
+  color: var(--text-button);
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3px;

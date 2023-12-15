@@ -20,8 +20,9 @@
     padding: 10px 15px;
     border-radius: 4px;
     background-color: #009dff;
-    color: white;
+    color: var(--text-button);
     border: none;
+    cursor: pointer;
     text-decoration: none;
     transition: 0.3s;
 
@@ -36,7 +37,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    background-color: #fdf7e2;
+    background-color: var(--background-question);
     border-bottom: solid 1px #dbdbdb;
     margin-bottom: 1px;
 }
@@ -93,8 +94,8 @@
     margin: 2px;
     padding: 4px;
     font-size: 13px;
-    background-color: #edeff0;
-    color: #39739d;
+    background-color:var(--background-tags);
+    color: var(--text-body-tags);
 }
 
  .display-time{

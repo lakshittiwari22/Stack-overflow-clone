@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import "./homemainbar.css";
 import QuestionList from "./QuestionList";
-import socket from "../../Socket";
+import socket from "../../webSocket/Socket";
 
 const HomeMainBar = () => {
  

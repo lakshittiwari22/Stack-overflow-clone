@@ -25,7 +25,7 @@
 
 .side-nav-links {
   text-decoration: none;
-  color: #3a3a3a;
+  color: var(--text-body-secondry);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -34,7 +34,7 @@
 }
 
 .side-nav-links:hover{
-    color: black;
+    color: var(--text-hover);
 }
 
 .globe-icon {
@@ -44,8 +44,8 @@
 
 .active{
     font-weight: bolder;
-    color: black;
-    background-color: rgb(225, 225, 225);
+    color: var(--text-body);
+    background-color: var(--background-active);
     border-right: solid 3px #ef8236;
 }
 

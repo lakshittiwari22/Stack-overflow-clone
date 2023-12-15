@@ -28,11 +28,14 @@ const PostDetails = () => {
   const posts = useSelector((state) => state.postReducer);
   let User = useSelector((state) => state.currentUserReducer);
   const users = useSelector((state) => state.usersReducer);
+  const activeUser = users?.filter((user)=> user._id === User?.result?._id)[0];
 
   const singlePost = posts.data?.filter((post) => post._id === id);
-  const postProfile = users.filter(
-    (user) => user._id === singlePost[0].userId
+  const postProfile = users?.filter(
+    (user) => user._id === singlePost[0]?.userId
   )[0];
+
+
   
 
   // defining variable for changing the css class of like button
@@ -209,13 +212,13 @@ const PostDetails = () => {
                       borderRadius="50%"
                       color="white"
                     >
-                      {User?.result.profileImg !== "" ? (
+                      {activeUser?.profileImg !== "" ? (
                         <img
-                          src={User?.result.profileImg}
+                          src={activeUser?.profileImg}
                           alt="profile-image"
                         />
                       ) : (
-                        <p>{User?.result.name.charAt(0)}</p>
+                        <p>{activeUser?.name.charAt(0)}</p>
                       )}
                     </Avatar>
                   </div>

@@ -41,7 +41,7 @@ const DisplayAnswers = ({ question, handleShare, User }) => {
                 </button>
               )}
             </div>
-            <div>
+            <div >
               <p>answered {moment(ans.answeredOn).fromNow()}</p>
               <Link
                 to={`/Users/${ans.userId}`}

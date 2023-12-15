@@ -8,7 +8,7 @@ import { fetchAllQuestions } from "./actions/question";
 import { fetchAllUsers } from "./actions/users";
 import { FetchAllPosts } from "./actions/post";
 
-import socket from "./Socket";
+import socket from "./webSocket/Socket";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,13 +26,13 @@ function App() {
   //"https://stack-overflow-clone-server-ebfz.onrender.com"
   useEffect(() => {
     // Listen for 'newPostNotification' event from the server
-    socket.once("newPostNotification", (data) => {
+    socket.on("newPostNotification", (data) => {
       if (data) {
         dispatch(FetchAllPosts());
       }
     });
 
-    socket.once("newQuestionNotification", (data) => {
+    socket.on("newQuestionNotification", (data) => {
       if (data) {
         dispatch(fetchAllQuestions());
       }
@@ -44,6 +44,8 @@ function App() {
     return () => {
       // Disconnect the socket when the component unmounts
       // socket.disconnect();
+      socket.off("newPostNotification");
+      socket.off("newQuestionNotification");
     };
   }, [dispatch]);
 

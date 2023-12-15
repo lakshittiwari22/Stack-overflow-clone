@@ -8,16 +8,16 @@
   z-index: 5;
   top: 0%;
   left: 0%;
-  background-color: #f8f9f9;
+  background-color: var(--background-nav);
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
 }
 
 .navbar {
   height: 100%;
-  min-width: 90%;
+  min-width: 94%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,8 +27,25 @@
   padding: 5px 0;
 }
 
-img {
-  width: 150px;
+.logo-contianer {
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-body-secondry);
+}
+
+.logo-contianer p {
+  font-weight: 400;
+  font-size: large;
+}
+
+.logo-contianer p span {
+  font-weight: bold;
+}
+
+.logo {
+  width: 35px;
   height: 30px;
 }
 
@@ -37,7 +54,7 @@ img {
   font-size: small;
   font-weight: 500;
   text-decoration: none;
-  color: rgb(69, 69, 69);
+  color: var(--text-body-secondry);
   transition: 0.2s;
 }
 
@@ -48,7 +65,7 @@ img {
 }
 
 .nav-item:hover {
-  background-color: #dbdbdb;
+  background-color: var(--background-button-hover);
 }
 
 .navbar form {
@@ -63,27 +80,30 @@ img {
   margin: 0;
   padding: 8px 10px 8px 32px;
   font-size: 13px;
-  border: solid 1px #0000003e;
+  background-color: var(--background-nav);
+  border: solid 1px var(--border-color);
   border-radius: 3px;
 }
 
 .navbar form .search-icon {
   position: absolute;
+  color: #636b74;
   left: 22px;
-  top: 3px;
+  top: 8px;
 }
 
 .nav-links {
   padding: 7px 13px;
   border: none;
   border-radius: 5px;
-  background-color: #e1ecf4;
+  color: var(--text-button);
+  background-color: #009dff;
   cursor: pointer;
   margin-left: 10px;
 }
 
-.nav-link:hover {
-  background-color: #d3e4eb;
+.nav-links:hover {
+  background-color: #0086d8;
 }
 
 .avatar-container-mobile {
@@ -110,6 +130,30 @@ img {
   display: none;
 }
 
+.loginBtn-container-mobile {
+  display: flex;
+}
+
+.dark-mode-toggle-container {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: var(--background-body-secondry);
+}
+
+.dark-mode-toggle-container:hover {
+  background-color: var(--background-button-hover);
+}
+
+.dark-mode-icon{
+  height: 20px;
+}
+
 /* media-queries */
 
 @media (max-width: 600px) {
@@ -117,7 +161,7 @@ img {
     width: 100%;
     height: 60px;
     box-shadow: none;
-    border-bottom: 1px solid #d3e4eb;
+    box-shadow: 0px 1px 5px #00000033;
   }
 
   .navbar {
@@ -170,11 +214,11 @@ img {
     padding: 7px 13px;
     border-radius: 5px;
     cursor: pointer;
-    color: #636b74;
+    color: var(--text-body-secondry);
   }
 
   .nav-btn-mobile:hover {
-    background-color: #e1ecf4;
+    background-color: var(--background-button-hover);
   }
 
   .stackoverflow-icon {
@@ -186,8 +230,13 @@ img {
 
   .loginBtn-container-mobile {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: 6px;
+  }
+
+  .dark-mode-toggle-container {
+    margin-left: 0;
   }
 
   .avatar-container-mobile {
@@ -205,10 +254,11 @@ img {
     position: absolute;
     top: 20px;
     left: -100%;
-    background-color: #f8f9f9;
+    background-color: var(--background-body-secondry);
     box-shadow: 0px 1px 5px #00000033;
     width: 50vw;
     height: 55vh;
+    position: fixed;
     z-index: 1;
     margin-left: 0;
     transition: 0.3s;
@@ -260,7 +310,6 @@ img {
   }
 
   .navbar form {
-    
     margin-right: 15px;
   }
   .search-bar {
@@ -274,7 +323,7 @@ img {
     padding: 7px 13px;
     border-radius: 5px;
     cursor: pointer;
-    color: #636b74;
+    color: var(--text-body-secondry);
   }
 
   .nav-btn-mobile:hover {
@@ -293,7 +342,7 @@ img {
     position: absolute;
     top: 20px;
     left: -100%;
-    background-color: #f8f9f9;
+    background-color: var(--background-body-secondry);
     box-shadow: 0px 1px 5px #00000033;
     width: 200px;
     height: 400px;
@@ -317,7 +366,6 @@ img {
     padding: 5px 0px;
   }
   .navbar form {
-    
     margin-right: 20px;
   }
   .search-bar {

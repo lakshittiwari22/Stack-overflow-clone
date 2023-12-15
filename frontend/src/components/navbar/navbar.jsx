@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./navbar.css";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { googleLogout } from "@react-oauth/google";
 import decode from "jwt-decode";
@@ -9,11 +10,11 @@ import {
   faBars,
   faTimes,
   faMagnifyingGlass,
+  faMoon,
+  faSun,
 } from "@fortawesome/free-solid-svg-icons";
-import icon from "../../assets/stack-overflow.png";
 
-import logo from "../../assets/logo-stackoverflow.png";
-import search from "../../assets/magnifying-glass-solid.svg";
+import icon from "../../assets/stack-overflow.png";
 import Avatar from "../Avatar/Avatar";
 import { setCurrentUser } from "../../actions/currentUser";
 import Menubar from "./Menubar";
@@ -23,14 +24,23 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const [slide, setSlide] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const menuRef = useRef(); //gives the referece of the elemet clicked by the user
   // seletes a particular reducer and fetches data
 
-  let User = useSelector((state) => state.currentUserReducer);
-  let allUsers = useSelector((state) => state.usersReducer)
-  const currentUser = allUsers?.filter((user) => user._id === User?.result?._id)[0]
+  const body = document.body;
+  if (isDarkMode) {
+    body.classList.add("dark-mode");
+  } else {
+    body.classList.remove("dark-mode");
+  }
 
-  
+  let User = useSelector((state) => state.currentUserReducer);
+  let allUsers = useSelector((state) => state.usersReducer);
+  const currentUser = allUsers?.filter(
+    (user) => user._id === User?.result?._id
+  )[0];
+
   const handleLogout = () => {
     googleLogout();
     dispatch({ type: "LOGOUT" });
@@ -44,6 +54,48 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    //dark mode toggle
+
+    const now = new Date();
+
+    const getWeatherInfo = async () => {
+      const apiKey = "4903065373f79f88bf9ac0f0d7bdec91";
+      const city = "haldwani";
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+      try {
+        const response = await axios.get(apiUrl);
+        const weatherData = response.data;
+        const sunrise = new Date(weatherData.sys.sunrise * 1000).getHours();
+        const sunset = new Date(weatherData.sys.sunset * 1000).getHours();
+        const hour = now.getHours();
+        const body = document.body;
+        console.log(weatherData);
+
+        const isDarkWeather = weatherData.weather.some((condition) =>
+          ["Clouds", "Rain", "Snow", "Thunderstorm"].includes(condition.main)
+        );
+
+        console.log(isDarkWeather);
+
+        if (sunset <= hour || hour < sunrise || isDarkWeather) {
+          setIsDarkMode(true);
+          body.classList.add("dark-mode");
+        } else {
+          setIsDarkMode(false);
+          body.classList.remove("dark-mode");
+        }
+      } catch (error) {
+        console.error("Error fetching weather information", error);
+      }
+    };
+    getWeatherInfo();
+
+    // Set up an interval to toggle dark mode automatically every minute
+    const intervalId = setInterval(() => {
+      getWeatherInfo();
+    }, 30 * 60000); // Check every 30 minutes
+
     const token = User?.token;
 
     //logout user as soon as token expires
@@ -67,6 +119,7 @@ const Navbar = () => {
     document.addEventListener("mousedown", handler);
     return () => {
       document.removeEventListener("mousedown", handler);
+      clearInterval(intervalId);
     };
   }, [dispatch]);
 
@@ -98,7 +151,12 @@ const Navbar = () => {
           </div>
 
           <Link to="/" className="nav-item nav-logo mobile">
-            <img src={logo} alt="logo" />
+            <div className="logo-contianer">
+              <img src={icon} alt="stack-overflow-icon" className="logo" />{" "}
+              <p>
+                stack<span>Overflow</span>
+              </p>
+            </div>
           </Link>
           <Link to="/" className="nav-item nav-btn mobile">
             About
@@ -112,23 +170,41 @@ const Navbar = () => {
 
           <form className="mobile search-bar">
             <input type="text" placeholder="Search..." />
-            <img
-              src={search}
-              alt="search icon"
-              style={{ width: "18px" }}
-              className="search-icon"
-            />
+
+            <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
           </form>
+
           {User === null ? (
             <div className="loginBtn-container-mobile">
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
                 className="search-icon-mobile"
               />
+              <button
+                className="nav-item nav-links"
+                onClick={() => navigate("/Auth")}
+              >
+                Log In
+              </button>
 
-              <Link to="/Auth" className="nav-item nav-links">
-                Log in
-              </Link>
+              <div
+                className="dark-mode-toggle-container"
+                onClick={() => setIsDarkMode(!isDarkMode)}
+              >
+                {isDarkMode ? (
+                  <FontAwesomeIcon
+                    icon={faSun}
+                    className="dark-mode-icon"
+                    style={{ color: "#ef8236" }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faMoon}
+                    className="dark-mode-icon"
+                    style={{ color: "#414141" }}
+                  />
+                )}
+              </div>
             </div>
           ) : (
             <div className="avatar-container-mobile">
@@ -143,7 +219,7 @@ const Navbar = () => {
                 borderRadius="50%"
                 color="white"
               >
-                {currentUser?.profileImg !== '' ? (
+                {currentUser?.profileImg !== "" ? (
                   <img
                     src={currentUser?.profileImg}
                     alt="profile-pictures"
@@ -159,6 +235,24 @@ const Navbar = () => {
               <button className="nav-item nav-links" onClick={handleLogout}>
                 Log out
               </button>
+              <div
+                className="dark-mode-toggle-container"
+                onClick={() => setIsDarkMode(!isDarkMode)}
+              >
+                {isDarkMode ? (
+                  <FontAwesomeIcon
+                    icon={faSun}
+                    className="dark-mode-icon"
+                    style={{ color: "#ef8236" }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faMoon}
+                    className="dark-mode-icon"
+                    style={{ color: "#414141" }}
+                  />
+                )}
+              </div>
             </div>
           )}
         </div>

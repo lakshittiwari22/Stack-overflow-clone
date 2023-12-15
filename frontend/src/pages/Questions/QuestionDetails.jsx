@@ -8,11 +8,11 @@ import {
   deleteQuestion,
   voteQuestion,
 } from "../../actions/question";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import DisplayAnswers from "./DisplayAnswers";
 import { useSelector } from "react-redux";
 
-import upVote from "../../assets/sort-up.png";
-import downVote from "../../assets/sort-down.png";
 import "./questionspage.css";
 import Avatar from "../../components/Avatar/Avatar";
 
@@ -49,7 +49,6 @@ const QuestionDetails = () => {
       }
     }
     setAnswer("");
-    
   };
 
   const handleShare = () => {
@@ -92,18 +91,15 @@ const QuestionDetails = () => {
                   <h1>{question.questionTitle}</h1>
                   <div className="question-details-container-2">
                     <div className="question-votes">
-                      <img
-                        src={upVote}
-                        alt="upVote"
-                        style={{ width: "18px", height: "18px" }}
+                      <FontAwesomeIcon
+                        icon={faCaretUp}
                         className="votes-icon"
                         onClick={handleUpVote}
                       />
+
                       <p>{question.upVote.length - question.downVote.length}</p>
-                      <img
-                        src={downVote}
-                        alt="downVote"
-                        style={{ width: "18px", height: "18px" }}
+                      <FontAwesomeIcon
+                        icon={faCaretDown}
                         className="votes-icon"
                         onClick={handleDownVote}
                       />
@@ -138,6 +134,7 @@ const QuestionDetails = () => {
                               backgroundColor="orange"
                               px="30px"
                               py="30px"
+                              borderRadius="5px"
                             >
                               {userQuestioned?.profileImg !== "" ? (
                                 <img

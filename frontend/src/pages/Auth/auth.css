@@ -1,7 +1,7 @@
 .auth-section {
   min-height: 100vh;
   margin: 0 auto;
-  background-color: #f1f2f3;
+  background-color: var(--background-body-secondry);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +29,7 @@
 .auth-container-2 form {
   width: 100%;
   padding: 20px;
-  background-color: white;
+  background-color: var(--background-body-primary);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -45,7 +45,9 @@
 .auth-container-2 form label input {
   padding: 10px;
   width: calc(100% - 30px);
-  border: solid 1px #0000003e;
+  border: solid 1px var(--border-color);
+  background-color:var(--background-nav);
+  color: var(--text-body);
   font-size: 13px;
 }
 
@@ -70,7 +72,7 @@
   padding: 10px 5px;
   background-color: #009dff;
   border: solid 1px #009dff;
-  color: white;
+  color: var(--text-button);
   border-radius: 5px;
   cursor: pointer;
   transition: 0.2s;
@@ -96,7 +98,7 @@
   margin-bottom: 10px;
   width: 100%;
   border: 0px none;
-  background-color: white; /* Google Blue */
+  background-color:var(--background-body-primary); /* Google Blue */
   
   border-radius: 5px;
 
@@ -117,7 +119,7 @@
 }
 
 .google-btn:hover {
-  color: #0c0d0e;
+  color: var(--text-body);
   
 }
 @media screen and (max-width: 820px) {

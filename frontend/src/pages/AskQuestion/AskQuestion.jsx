@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import ReactMarkdown from "react-markdown";
+import { useDropzone } from "react-dropzone";
+
 import "./askquestion.css";
 import { AskPublicQuestion } from "../../actions/question";
 
 const AskQuestion = () => {
   const [questionTitle, setQuestionTitle] = useState("");
-  const [questionBody, setQuestionBody] = useState("");
+  const [quillValue, setQuillValue] = useState("");
   const [questionTags, setQuestionTags] = useState("");
+  const [markdownPreview, setMarkdownPreview] = useState(false);
 
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
@@ -17,12 +23,12 @@ const AskQuestion = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (User) {
-      if (questionTitle && questionBody && questionTags) {
+      if (questionTitle && quillValue && questionTags) {
         dispatch(
           AskPublicQuestion(
             {
               questionTitle,
-              questionBody,
+              questionBody: quillValue,
               questionTags,
               userPosted: User.result.name,
               userId: User.result._id,
@@ -36,9 +42,28 @@ const AskQuestion = () => {
 
   const handleEnter = (e) => {
     if (e.code === "Enter") {
-      setQuestionBody(questionBody + "\n");
+      setQuillValue(quillValue + "\n");
     }
   };
+
+  const modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{ 'header': 1 }, { 'header': 2 }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      ['link', 'image'],
+      [{ 'code-block': 'code-block' }],
+      [{'inline-code': 'inline-code'}]
+      ['clean'],
+    ],
+  };
+
+  const formats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image',
+  ];
 
   return (
     <div className="ask-question">
@@ -68,8 +93,17 @@ const AskQuestion = () => {
                 Include all the information someone would need to answer your
                 question
               </p>
-
-              <textarea
+              <ReactQuill
+                theme="snow"
+                // value={questionBody}
+                onKeyDown={handleEnter}
+                value={quillValue}
+                onChange={(value) => setQuillValue(value)}
+                modules={modules}
+                formats={formats}
+              />
+<pre>kskdsd</pre>
+              {/* <textarea
                 name=""
                 id="ask-ques-body"
                 onChange={(e) => {
@@ -78,8 +112,11 @@ const AskQuestion = () => {
                 onKeyDown={handleEnter}
                 cols="30"
                 rows="10"
-              ></textarea>
+              ></textarea> */}
             </label>
+
+
+
             <label htmlFor="ask-ques-tags">
               <h4>Tags</h4>
               <p>Add up to 5 tags to describe what your question is about</p>

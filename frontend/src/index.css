@@ -1,13 +1,53 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-body-primary);
+  color: var(--text-body);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+body.dark-mode {
+  --background-body-primary: #121212;
+  --background-body-secondry: #191a19;
+  --background-question: #2f3032;
+  --background-rightsidebar: #7e502a;
+  --background-rightsidebar-secondry: #6b5724;
+  --background-tags: #1c3b54;
+  --background-active: #222222;
+  --text-body: #e3e6eb;
+  --text-body-secondry:#dbdbdb;
+  --text-body-tags: #b2d6fb;
+  --background-nav: #222222;
+  --background-button: #ddd;
+  --border-color:#636b74;
+  --text-button: black;
+  --background-button-hover: #414141;
+  --text-hover:#818181;
+}
+
+body {
+  --background-body-primary: #fff;
+  --background-body-secondry: #f6f9f9;
+  --background-question: #fdf7e2;
+  --background-rightsidebar: #fdf7e2;
+  --background-rightsidebar-secondry: #fbf3d5;
+  --background-tags: #edeff0;
+  --background-nav: #f0f2f5;
+  --background-active:  #e1e1e1;
+  --text-body: black;
+  --text-body-secondry:#323232;
+  --text-body-tags: #39739d;
+  --background-button: #333;
+  --text-button: #fff;
+  --border-color: black;
+  --background-button-hover: #dbdbdb;
+  --text-hover: #919191;
 }

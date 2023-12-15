@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./leftsidebar.css";
 import { NavLink } from "react-router-dom";
-import globe from "../../assets/globe.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEarthAsia, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+
 import { useSelector } from "react-redux";
 
 const LeftSideBar = () => {
+  // const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // useEffect(() => {
+  //   const body = document.body;
+  //   if (isDarkMode) {
+  //     body.classList.add("dark-mode");
+  //   } else {
+  //     body.classList.remove("dark-mode");
+  //   }
+  // }, [isDarkMode]);
+
   let User = useSelector((state) => state.currentUserReducer);
   return (
     <div className="left-sidebar">
@@ -22,7 +35,8 @@ const LeftSideBar = () => {
             className="side-nav-links"
             activeclassname="active"
           >
-            <img src={globe} alt="globe" className="globe-icon" />
+            <FontAwesomeIcon icon={faEarthAsia} className="globe-icon" />
+
             <p style={{ paddingLeft: "10px" }}>Questions</p>
           </NavLink>
           <NavLink
@@ -51,6 +65,19 @@ const LeftSideBar = () => {
           >
             <p>Social</p>
           </NavLink>
+          {/* <div>
+            {isDarkMode ? (
+              <FontAwesomeIcon
+                icon={faMoon}
+                onClick={() => setIsDarkMode(!isDarkMode)}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faSun}
+                onClick={() => setIsDarkMode(!isDarkMode)}
+              />
+            )}
+          </div> */}
         </div>
       </nav>
     </div>

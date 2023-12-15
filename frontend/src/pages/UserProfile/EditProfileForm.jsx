@@ -15,7 +15,7 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
 
   //generating custom avatars using robohash.org--------------------------
   const avatarOptions = [];
-  for (let i = 1; i <= 50; i++) {
+  for (let i = 1; i <= 100; i++) {
     avatarOptions.push(`https://robohash.org/avatar${i}.png`);
   }
   //------------------------------------------------------------------------
@@ -87,7 +87,7 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
           <img src={profilePicture} alt="profile" />
         </div>
         <label htmlFor="">
-          <h3>Choose Custom Avatar</h3>
+          <h3>Choose Your Robo Avatar</h3>
 
           <div className="avatar-selection-conatiner">
             <div className="avatar-conatiner-inner">
