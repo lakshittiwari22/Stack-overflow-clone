@@ -59,7 +59,7 @@ const Navbar = () => {
     const now = new Date();
 
     const getWeatherInfo = async () => {
-      const apiKey = "Your_API_KEY";
+      const apiKey = "4903065373f79f88bf9ac0f0d7bdec91";
       const city = "haldwani";
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 

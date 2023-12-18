@@ -76,7 +76,7 @@ const Post = ({ post }) => {
         <div className="username-container-2">
           <div style={{ fontWeight: "bold" }}>{post.userPosted}</div>
           <div style={{ color: "#8d949e", fontSize: "13px" }}>
-            <span>{moment(post.postedOn).fromNow()}</span>.{" "}
+            <span>{moment(post.postedOn).fromNow()}</span> .{" "}
             <FontAwesomeIcon icon={faEarthAsia} />
           </div>
         </div>
@@ -112,7 +112,7 @@ const Post = ({ post }) => {
         </p>
 
         <p style={{ fontSize: "12px", color: "slateGray" }}>
-          {post.noOfComments} Comments
+          {post.noOfComments} {post.noOfComments === 1 ? "comment" : "comments"}
         </p>
       </div>
 

@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import ReactMarkdown from "react-markdown";
-import { useDropzone } from "react-dropzone";
 
 import "./askquestion.css";
 import { AskPublicQuestion } from "../../actions/question";
@@ -13,7 +11,6 @@ const AskQuestion = () => {
   const [questionTitle, setQuestionTitle] = useState("");
   const [quillValue, setQuillValue] = useState("");
   const [questionTags, setQuestionTags] = useState("");
-  const [markdownPreview, setMarkdownPreview] = useState(false);
 
   const dispatch = useDispatch();
   const User = useSelector((state) => state.currentUserReducer);
@@ -40,29 +37,36 @@ const AskQuestion = () => {
     } else alert("Login to ask question");
   };
 
-  const handleEnter = (e) => {
-    if (e.code === "Enter") {
-      setQuillValue(quillValue + "\n");
-    }
-  };
-
   const modules = {
     toolbar: [
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ 'header': 1 }, { 'header': 2 }],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      ['link', 'image'],
-      [{ 'code-block': 'code-block' }],
-      [{'inline-code': 'inline-code'}]
-      ['clean'],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ header: 1 }, { header: 2 }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link"],
+      ["image"],
+      [{ "code-block": "code-block" }],
+      [ "code"],
+      ["clean"],
     ],
   };
 
   const formats = [
-    'header', 'font', 'size',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link', 'image',
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "code-block",
+    "clean",
+    'code'
   ];
 
   return (
@@ -95,14 +99,16 @@ const AskQuestion = () => {
               </p>
               <ReactQuill
                 theme="snow"
+                
                 // value={questionBody}
-                onKeyDown={handleEnter}
+
                 value={quillValue}
                 onChange={(value) => setQuillValue(value)}
                 modules={modules}
                 formats={formats}
+                dangerouslySetInnerHTML={{ __html: quillValue }}
               />
-<pre>kskdsd</pre>
+
               {/* <textarea
                 name=""
                 id="ask-ques-body"
@@ -114,8 +120,6 @@ const AskQuestion = () => {
                 rows="10"
               ></textarea> */}
             </label>
-
-
 
             <label htmlFor="ask-ques-tags">
               <h4>Tags</h4>

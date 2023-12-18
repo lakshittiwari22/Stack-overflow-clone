@@ -25,7 +25,6 @@
   font-size: 40px;
   cursor: pointer;
   color: var(--text-body);
-  
 }
 .votes-icon:active {
   color: #ef8236;
@@ -33,6 +32,35 @@
 .question-details-container .question-body {
   line-height: 22px;
   white-space: pre-line;
+}
+
+.question-body blockquote {
+  /* Your styles here */
+  border-left: 6px solid gray;
+  padding-left: 4px;
+}
+
+.question-body pre {
+  background-color: var(--background-nav);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.question-body code{
+  font-family: 'Courier New', monospace;
+  background-color: var(--background-nav);
+  padding: 2px 4px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+
+}
+
+.question-body img{
+  width: 100%;
+  border: 1px solid var(--border-color);
 }
 
 .question-details-container .question-details-tags {

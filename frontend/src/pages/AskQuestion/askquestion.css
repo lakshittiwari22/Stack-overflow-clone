@@ -6,7 +6,6 @@
 .ask-ques-container {
   margin: auto;
   max-width: 1200px;
-  
 }
 
 .ask-ques-container h1 {
@@ -40,6 +39,45 @@
   font-family: "Roboto", sans-serif;
   width: calc(100% - 20px);
   resize: vertical;
+}
+
+.ql-toolbar {
+  background-color : var(--background-nav);
+  
+}
+
+.ql-toolbar .ql-formats button.ql-code {
+  
+  width: 68px;
+  border: 2px solid gray;
+  border-radius: 1px;
+  content: "inline";
+}
+
+.ql-toolbar .ql-formats button.ql-code::before {
+  content: "inline";
+  font-weight: bold;
+  color: grey;
+  display: inline-block; /* Ensure the content is displayed as a block */
+  margin-right: 5px; /* Adjust spacing between content and button border */
+}
+
+.ql-editor{
+  background-color: var(--background-nav);
+}
+
+.ql-editor code {
+  color: #636b74;
+}
+
+.ql-editor pre {
+  color: #636b74 !important;
+ background-color: #dbdbdb !important;
+}
+
+.ql-editor img{
+width: 100px;
+height: 100px;
 }
 
 .review-btn {
