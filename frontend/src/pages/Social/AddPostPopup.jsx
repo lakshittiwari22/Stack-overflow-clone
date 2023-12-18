@@ -4,14 +4,16 @@ import Avatar from "../../components/Avatar/Avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faPhotoFilm } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
+import Filter from "bad-words";
 
 import { CreatePublicPost } from "../../actions/post";
 
-
 const AddPostPopup = ({ trigger, setTrigger }) => {
   let User = useSelector((state) => state.currentUserReducer);
-  let allUsers = useSelector((state) => state.usersReducer)
-  const currentUser = allUsers?.filter((user) => user._id === User?.result?._id)[0]
+  let allUsers = useSelector((state) => state.usersReducer);
+  const currentUser = allUsers?.filter(
+    (user) => user._id === User?.result?._id
+  )[0];
   const [mediaType, setMediaType] = useState(""); // Added state to track media type
   const [media, setMedia] = useState("");
   const [caption, setCaption] = useState("");
@@ -21,7 +23,7 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (User) {
-      if (caption) {
+      if (caption && !containsBadWords(caption)) {
         dispatch(
           CreatePublicPost(
             {
@@ -35,8 +37,16 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
           )
         );
         setTrigger(!trigger);
-      } else alert("Enter Caption!");
-    } else alert("Login to Post");
+      } else if (!caption) {
+        alert("Enter Caption!");
+      } else {
+        alert(
+          "Caption contains inappropriate language. Please modify and try again."
+        );
+      }
+    } else {
+      alert("Login to Post");
+    }
 
     setMedia("");
     setMediaType("");
@@ -63,6 +73,12 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
         console.log("Error ", error);
       };
     }
+  };
+
+  // Function to check for bad words
+  const containsBadWords = (text) => {
+    const filter = new Filter();
+    return filter.isProfane(text);
   };
 
   return trigger ? (
@@ -140,7 +156,7 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
             />
             {/* Conditionally render the media based on type */}
             {mediaType === "image" && media && (
-              <img src={media} alt="Uploaded Image"  width="150" height="150" />
+              <img src={media} alt="Uploaded Image" width="150" height="150" />
             )}
 
             {mediaType === "video" && media && (

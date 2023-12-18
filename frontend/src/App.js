@@ -22,8 +22,7 @@ function App() {
       }
     });
   }
-  //"http://localhost:5000"
-  //"https://stack-overflow-clone-server-ebfz.onrender.com"
+  
   useEffect(() => {
     // Listen for 'newPostNotification' event from the server
     socket.on("newPostNotification", (data) => {

@@ -35,10 +35,7 @@ const HomeMainBar = () => {
       }
     });
 
-    return () => {
-      // Disconnect the socket when the component unmounts
-      socket.off("newQuestionNotification");
-    };
+   
   }, []);
 
   let User = useSelector((state) => state.currentUserReducer);

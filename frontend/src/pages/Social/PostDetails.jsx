@@ -9,8 +9,9 @@ import {
   faThumbsUp,
   faComment,
 } from "@fortawesome/free-solid-svg-icons";
-import Avatar from "../../components/Avatar/Avatar";
+import Filter from "bad-words";
 
+import Avatar from "../../components/Avatar/Avatar";
 import DisplayComments from "./DisplayComments";
 import { useDispatch, useSelector } from "react-redux";
 import { LikePublicPost, deletePost, postComment } from "../../actions/post";
@@ -28,15 +29,12 @@ const PostDetails = () => {
   const posts = useSelector((state) => state.postReducer);
   let User = useSelector((state) => state.currentUserReducer);
   const users = useSelector((state) => state.usersReducer);
-  const activeUser = users?.filter((user)=> user._id === User?.result?._id)[0];
+  const activeUser = users?.filter((user) => user._id === User?.result?._id)[0];
 
   const singlePost = posts.data?.filter((post) => post._id === id);
   const postProfile = users?.filter(
     (user) => user._id === singlePost[0]?.userId
   )[0];
-
-
-  
 
   // defining variable for changing the css class of like button
   const userLiked = singlePost?.map((post) => {
@@ -56,7 +54,7 @@ const PostDetails = () => {
   const handleSubmit = (e, commentLength) => {
     e.preventDefault();
 
-    if (comment) {
+    if (comment && !containsBadWords(comment)) {
       dispatch(
         postComment({
           id,
@@ -66,8 +64,12 @@ const PostDetails = () => {
           userId: User.result._id,
         })
       );
-    } else {
+    } else if (!comment) {
       alert("comment cannot be empty");
+    } else {
+      alert(
+        "Your comment contains inappropriate language. Please modify and try again."
+      );
     }
 
     setComment("");
@@ -81,6 +83,11 @@ const PostDetails = () => {
   const handleShare = () => {
     copy(url + location.pathname);
     alert("copied to clipboard");
+  };
+
+  const containsBadWords = (text) => {
+    const filter = new Filter();
+    return filter.isProfane(text);
   };
 
   return (
@@ -213,10 +220,7 @@ const PostDetails = () => {
                       color="white"
                     >
                       {activeUser?.profileImg !== "" ? (
-                        <img
-                          src={activeUser?.profileImg}
-                          alt="profile-image"
-                        />
+                        <img src={activeUser?.profileImg} alt="profile-image" />
                       ) : (
                         <p>{activeUser?.name.charAt(0)}</p>
                       )}
