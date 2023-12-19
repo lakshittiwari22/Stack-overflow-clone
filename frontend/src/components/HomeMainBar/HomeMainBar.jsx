@@ -11,29 +11,29 @@ const HomeMainBar = () => {
 
   useEffect(() => {
     // Listen for 'newPostNotification' event from the server
-    socket.on("newQuestionNotification", (data) => {
-      console.log(data.message);
-      if (data) {
-        if (Notification.permission === "granted") {
-          new Notification("Post", {
-            body: `${data.message} posted a new question`,
-            // icon: { icon },
-          });
-        }
-      }
-    });
+    // socket.on("newQuestionNotification", (data) => {
+      
+    //   if (data) {
+    //     if (Notification.permission === "granted") {
+    //       new Notification("Post", {
+    //         body: `${data.message} posted a new question`,
+    //         // icon: { icon },
+    //       });
+    //     }
+    //   }
+    // });
 
-    socket.on("newPostNotification", (data) => {
-      if (data) {
-        console.log(data.message);
-        if (Notification.permission === "granted") {
-          new Notification("Post", {
-            body: `${data.message} created a new post`,
-            // icon: { icon },
-          });
-        }
-      }
-    });
+    // socket.on("newPostNotification", (data) => {
+    //   if (data) {
+    //     console.log(data.message);
+    //     if (Notification.permission === "granted") {
+    //       new Notification("Post", {
+    //         body: `${data.message} created a new post`,
+    //         // icon: { icon },
+    //       });
+    //     }
+    //   }
+    // });
 
    
   }, []);

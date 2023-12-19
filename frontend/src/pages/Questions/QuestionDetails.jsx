@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import DisplayAnswers from "./DisplayAnswers";
 import { useSelector } from "react-redux";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import "./questionspage.css";
 import Avatar from "../../components/Avatar/Avatar";
@@ -22,7 +24,8 @@ const QuestionDetails = () => {
   const allUsers = useSelector((state) => state.usersReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [answer, setAnswer] = useState(" ");
+  // const [answer, setAnswer] = useState(" ");
+  const [quillValue, setQuillValue] = useState("");
   const location = useLocation();
 
   const url = "https://stack-overflow-clone-22.netlify.app";
@@ -34,21 +37,21 @@ const QuestionDetails = () => {
       alert("Login or Signup to answer a question");
       navigate("/");
     } else {
-      if (answer === " ") {
+      if (!quillValue.trim()) {
         alert("Enter an answer");
       } else {
         dispatch(
           postAnswer({
             id,
             noOfAnswers: answerLength + 1,
-            answerBody: answer,
+            answerBody: quillValue,
             userAnswered: User.result.name,
             userId: User.result._id,
           })
         );
+        setQuillValue("");
       }
     }
-    setAnswer("");
   };
 
   const handleShare = () => {
@@ -68,6 +71,40 @@ const QuestionDetails = () => {
   const handleDownVote = () => {
     dispatch(voteQuestion(id, "downvote", User.result._id));
   };
+
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ header: 1 }, { header: 2 }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link"],
+      ["image"],
+      ["video"],
+      ["code-block"],
+      ["code"],
+      ["clean"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "video",
+    "code-block",
+    "clean",
+    "code",
+  ];
 
   const questionsList = useSelector((state) => state.questionsReducer);
   const displayQuestion = questionsList?.data?.filter(
@@ -105,7 +142,12 @@ const QuestionDetails = () => {
                       />
                     </div>
                     <div style={{ width: "100%" }}>
-                      <p className="question-body" dangerouslySetInnerHTML={{__html: question.questionBody}} />
+                      <p
+                        className="question-body"
+                        dangerouslySetInnerHTML={{
+                          __html: question.questionBody,
+                        }}
+                      />
                       <div className="question-details-tags">
                         {question.questionTags.map((tag) => (
                           <p key={tag}>{tag}</p>
@@ -171,6 +213,17 @@ const QuestionDetails = () => {
                       handlePostAns(e, question.answer.length);
                     }}
                   >
+                    <ReactQuill
+                      theme="snow"
+                      // value={questionBody}
+
+                      value={quillValue}
+                      onChange={(value) => setQuillValue(value)}
+                      modules={modules}
+                      formats={formats}
+                      dangerouslySetInnerHTML={{ __html: quillValue }}
+                    />
+                    {/* 
                     <textarea
                       name="
                     "
@@ -179,7 +232,7 @@ const QuestionDetails = () => {
                       rows="10"
                       value={answer}
                       onChange={(e) => setAnswer(e.target.value)}
-                    ></textarea>
+                    ></textarea> */}
                     <br />
                     <input
                       type="submit"

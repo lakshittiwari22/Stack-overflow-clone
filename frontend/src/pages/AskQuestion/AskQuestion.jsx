@@ -44,9 +44,11 @@ const AskQuestion = () => {
       [{ list: "ordered" }, { list: "bullet" }],
       ["link"],
       ["image"],
-      [{ "code-block": "code-block" }],
+      ["video"],
+      [ "code-block" ],
       [ "code"],
       ["clean"],
+      
     ],
   };
 
@@ -64,6 +66,7 @@ const AskQuestion = () => {
     "indent",
     "link",
     "image",
+    "video",
     "code-block",
     "clean",
     'code'

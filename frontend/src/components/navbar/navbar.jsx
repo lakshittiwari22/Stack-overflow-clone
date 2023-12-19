@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./navbar.css";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { googleLogout } from "@react-oauth/google";
 import decode from "jwt-decode";
@@ -18,6 +17,7 @@ import icon from "../../assets/stack-overflow.png";
 import Avatar from "../Avatar/Avatar";
 import { setCurrentUser } from "../../actions/currentUser";
 import Menubar from "./Menubar";
+import { getWeatherInfo } from "../getWeatherInfo";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -54,42 +54,8 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    //dark mode toggle
-
-    const now = new Date();
-
-    const getWeatherInfo = async () => {
-      const apiKey = "4903065373f79f88bf9ac0f0d7bdec91";
-      const city = "haldwani";
-      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-
-      try {
-        const response = await axios.get(apiUrl);
-        const weatherData = response.data;
-        const sunrise = new Date(weatherData.sys.sunrise * 1000).getHours();
-        const sunset = new Date(weatherData.sys.sunset * 1000).getHours();
-        const hour = now.getHours();
-        const body = document.body;
-        console.log(weatherData);
-
-        const isDarkWeather = weatherData.weather.some((condition) =>
-          ["Clouds", "Rain", "Snow", "Thunderstorm"].includes(condition.main)
-        );
-
-        console.log(isDarkWeather);
-
-        if (sunset <= hour || hour < sunrise || isDarkWeather) {
-          setIsDarkMode(true);
-          body.classList.add("dark-mode");
-        } else {
-          setIsDarkMode(false);
-          body.classList.remove("dark-mode");
-        }
-      } catch (error) {
-        console.error("Error fetching weather information", error);
-      }
-    };
-    getWeatherInfo();
+    //calling the weather info function
+    getWeatherInfo(setIsDarkMode);
 
     // Set up an interval to toggle dark mode automatically every minute
     const intervalId = setInterval(() => {

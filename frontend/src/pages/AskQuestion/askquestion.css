@@ -41,33 +41,33 @@
   resize: vertical;
 }
 
+/*---------styling for rich text editor------- */
 .ql-toolbar {
   background-color : var(--background-nav);
   
 }
 
-.ql-toolbar .ql-formats button.ql-code {
+.ql-toolbar .ql-formats button.ql-code-block {
   
-  width: 68px;
+  
   border: 2px solid gray;
   border-radius: 1px;
   content: "inline";
 }
 
-.ql-toolbar .ql-formats button.ql-code::before {
-  content: "inline";
-  font-weight: bold;
-  color: grey;
-  display: inline-block; /* Ensure the content is displayed as a block */
-  margin-right: 5px; /* Adjust spacing between content and button border */
+.ql-toolbar .ql-formats button.ql-code-block:hover{
+  border: 2px solid #0086d8;
 }
 
 .ql-editor{
   background-color: var(--background-nav);
+  height: 150px;
+  resize: vertical;
 }
 
 .ql-editor code {
   color: #636b74;
+  background-color: var(--background-body-primary) !important;
 }
 
 .ql-editor pre {
@@ -97,7 +97,7 @@ height: 100px;
 
 @media (max-width: 600px) {
   .ask-ques-container {
-    max-width: 360px;
+    max-width: 95%;
   }
 
   .ask-ques-container h1 {

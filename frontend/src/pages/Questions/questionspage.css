@@ -34,33 +34,36 @@
   white-space: pre-line;
 }
 
-.question-body blockquote {
-  /* Your styles here */
+.question-body blockquote,  .answer-body blockquote{
   border-left: 6px solid gray;
   padding-left: 4px;
 }
 
-.question-body pre {
+.question-body pre, .answer-body pre {
   background-color: var(--background-nav);
   padding: 2px 4px;
   border-radius: 4px;
   font-weight: 700;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
-.question-body code{
-  font-family: 'Courier New', monospace;
+.question-body code,  .answer-body code {
+  font-family: "Courier New", monospace;
   background-color: var(--background-nav);
   padding: 2px 4px;
   font-size: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
-
 }
 
-.question-body img{
+.question-body img,  .answer-body img {
   width: 100%;
   border: 1px solid var(--border-color);
+}
+
+.question-body iframe,  .answer-body iframe {
+  width: 100%;
+  height: 300px;
 }
 
 .question-details-container .question-details-tags {

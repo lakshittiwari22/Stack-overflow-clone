@@ -12,7 +12,6 @@ const DisplayAnswers = ({ question, handleShare, User }) => {
   const userWhoAnswered = allUsers?.filter(
     (user) => user._id === User?.result?._id
   )[0];
-  
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -25,7 +24,11 @@ const DisplayAnswers = ({ question, handleShare, User }) => {
     <div>
       {question.answer.map((ans) => (
         <div className="display-ans" key={ans._id}>
-          <p>{ans.answerBody}</p>
+          <p className="answer-body"
+            dangerouslySetInnerHTML={{
+              __html: ans.answerBody,
+            }}
+          />
 
           <div className="question-actions-user">
             <div>
@@ -41,14 +44,19 @@ const DisplayAnswers = ({ question, handleShare, User }) => {
                 </button>
               )}
             </div>
-            <div >
+            <div>
               <p>answered {moment(ans.answeredOn).fromNow()}</p>
               <Link
                 to={`/Users/${ans.userId}`}
                 className="user-link"
                 style={{ color: "#0086d8" }}
               >
-                <Avatar backgroundColor="lightGreen" borderRadius='5px' px="30px" py="30px">
+                <Avatar
+                  backgroundColor="lightGreen"
+                  borderRadius="5px"
+                  px="30px"
+                  py="30px"
+                >
                   {userWhoAnswered?.profileImg !== "" ? (
                     <img src={userWhoAnswered?.profileImg} alt="Dp" />
                   ) : (
