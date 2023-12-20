@@ -4,7 +4,7 @@ use the above command on the client and server side to install dependencies
 # `npm start`
 use the above command to on the client and server side to run the application
 
-#Features Added:
+# `Features Added`
 1. Created a Rich Text Editor in Ask Questions page and allow users to post code and video along with their question.
 2. Made the website responsive for all devices. 
 3. Create a public space to allow users to share images, videos, text, and other  things.
