@@ -32,3 +32,9 @@ export const emitNewQuestionNotification = (userPosted) => {
     io.emit("newQuestionNotification", { message: userPosted });
   }
 };
+
+export const emitNewAnswerNotification = (userPosted,userQuestioned) => {
+  if (io) {
+    io.emit("newAnswerNotification", { message: `${userPosted} answered ${userQuestioned}'s question`});
+  }
+};

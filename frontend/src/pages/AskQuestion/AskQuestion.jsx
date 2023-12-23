@@ -19,8 +19,9 @@ const AskQuestion = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const isEmptyAnswer = /^(\s*|<p>\s*<\/p>)$/.test(quillValue);
     if (User) {
-      if (questionTitle && quillValue && questionTags) {
+      if (questionTitle && !isEmptyAnswer && questionTags) {
         dispatch(
           AskPublicQuestion(
             {

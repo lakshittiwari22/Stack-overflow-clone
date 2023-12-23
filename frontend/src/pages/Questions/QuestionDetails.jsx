@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import { Link, useNavigate, useParams} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import copy from "copy-to-clipboard";
@@ -26,18 +26,32 @@ const QuestionDetails = () => {
   const dispatch = useDispatch();
   // const [answer, setAnswer] = useState(" ");
   const [quillValue, setQuillValue] = useState("");
-  const location = useLocation();
+
+  // Get the full URL of the current page
+  const currentUrl = window.location.href;
 
   const url = "https://stack-overflow-clone-22.netlify.app";
+
+  const questionsList = useSelector((state) => state.questionsReducer);
+  const displayQuestion = questionsList?.data?.filter(
+    (question) => question._id === id
+  )[0];
+  const userQuestioned = allUsers?.filter(
+    (user) => user._id === displayQuestion?.userId
+  )[0];
+
+
 
   const handlePostAns = (e, answerLength) => {
     e.preventDefault();
 
+    const isEmptyAnswer = /^(\s*|<p>\s*<\/p>)$/.test(quillValue);
+    console.log(isEmptyAnswer);
     if (User === null) {
       alert("Login or Signup to answer a question");
       navigate("/");
     } else {
-      if (!quillValue.trim()) {
+      if (isEmptyAnswer) {
         alert("Enter an answer");
       } else {
         dispatch(
@@ -47,6 +61,7 @@ const QuestionDetails = () => {
             answerBody: quillValue,
             userAnswered: User.result.name,
             userId: User.result._id,
+            userQuestioned: userQuestioned.name
           })
         );
         setQuillValue("");
@@ -55,7 +70,7 @@ const QuestionDetails = () => {
   };
 
   const handleShare = () => {
-    copy(url + location.pathname);
+    copy(currentUrl);
     alert("copied to clipboard");
   };
 
@@ -106,14 +121,7 @@ const QuestionDetails = () => {
     "code",
   ];
 
-  const questionsList = useSelector((state) => state.questionsReducer);
-  const displayQuestion = questionsList?.data?.filter(
-    (question) => question._id === id
-  )[0];
-  const userQuestioned = allUsers?.filter(
-    (user) => user._id === displayQuestion?.userId
-  )[0];
-
+ 
   return (
     <div className="question-details-page">
       {questionsList.data === null ? (

@@ -1,7 +1,7 @@
 import axios from "axios";
 export const getWeatherInfo = async (setIsDarkMode) => {
     const now = new Date();
-    const apiKey ="YOUR_API_KEY";
+    const apiKey ="API_KEY";
     const city = "haldwani";
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
@@ -12,10 +12,10 @@ export const getWeatherInfo = async (setIsDarkMode) => {
       const sunset = new Date(weatherData.sys.sunset * 1000).getHours();
       const hour = now.getHours();
       const body = document.body;
-      console.log(weatherData);
+      console.log(weatherData.weather[0].main);
 
       const isDarkWeather = weatherData.weather.some((condition) =>
-        ["Clouds", "Rain", "Snow", "Thunderstorm"].includes(condition.main)
+        ["Rain", "Snow", "Thunderstorm"].includes(condition.main)
       );
 
      

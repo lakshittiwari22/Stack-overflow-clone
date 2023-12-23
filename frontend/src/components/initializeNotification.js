@@ -39,8 +39,21 @@ export const initializeNotification = (dispatch) => {
         }
       });
 
+      socket.on("newAnswerNotification", (data) => {
+        if (data) {
+          if (Notification.permission === "granted") {
+            new Notification("Post", {
+              body: data.message,
+              // icon: { icon },
+            });
+          }
+          dispatch(fetchAllQuestions());
+        }
+      });
+
       return () => {
         socket.off("newPostNotification");
         socket.off("newQuestionNotification");
+        socket.off("newAnswerNotification");
       }
 } 

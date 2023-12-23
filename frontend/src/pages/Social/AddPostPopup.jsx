@@ -22,8 +22,10 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const isCaptionEmpty = /^\s*$/.test(caption);
     if (User) {
-      if (caption && !containsBadWords(caption)) {
+      if (!isCaptionEmpty && !containsBadWords(caption)) {
         dispatch(
           CreatePublicPost(
             {
@@ -37,7 +39,7 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
           )
         );
         setTrigger(!trigger);
-      } else if (!caption) {
+      } else if (isCaptionEmpty) {
         alert("Enter Caption!");
       } else {
         alert(
