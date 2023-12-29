@@ -60,7 +60,7 @@ const Navbar = () => {
     // Set up an interval to toggle dark mode automatically every minute
     const intervalId = setInterval(() => {
       getWeatherInfo();
-    }, 30 * 60000); // Check every 30 minutes
+    }, 10 * 60000); // Check every 10 minutes
 
     const token = User?.token;
 

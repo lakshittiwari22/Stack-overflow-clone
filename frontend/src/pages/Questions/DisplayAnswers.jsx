@@ -10,8 +10,9 @@ import { deleteAnswer } from "../../actions/question";
 const DisplayAnswers = ({ question, handleShare, User }) => {
   let allUsers = useSelector((state) => state.usersReducer);
   const userWhoAnswered = allUsers?.filter(
-    (user) => user._id === User?.result?._id
+    (user) => user._id === question.answer[0].userId
   )[0];
+
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const DisplayAnswers = ({ question, handleShare, User }) => {
                   {userWhoAnswered?.profileImg !== "" ? (
                     <img src={userWhoAnswered?.profileImg} alt="Dp" />
                   ) : (
-                    <p>{userWhoAnswered?.name.chatAt(0)}</p>
+                    <p>{userWhoAnswered?.name.charAt(0)}</p>
                   )}
                 </Avatar>
                 <div>{ans.userAnswered}</div>
