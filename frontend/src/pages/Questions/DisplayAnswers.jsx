@@ -10,7 +10,7 @@ import { deleteAnswer } from "../../actions/question";
 const DisplayAnswers = ({ question, handleShare, User }) => {
   let allUsers = useSelector((state) => state.usersReducer);
   const userWhoAnswered = allUsers?.filter(
-    (user) => user._id === question.answer[0].userId
+    (user) => user?._id === question.answer[0].userId
   )[0];
 
 

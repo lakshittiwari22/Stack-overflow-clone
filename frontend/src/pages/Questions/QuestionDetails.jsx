@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import moment from "moment";
@@ -30,7 +30,10 @@ const QuestionDetails = () => {
   // Get the full URL of the current page
   const currentUrl = window.location.href;
 
-  const url = "https://stack-overflow-clone-22.netlify.app";
+  useEffect(() => {
+    // Scroll to the top of the page when the component mounts
+    window.scrollTo(0, 0);
+  }, []); // The empty dependency array ensures that this effect runs only once
 
   const questionsList = useSelector((state) => state.questionsReducer);
   const displayQuestion = questionsList?.data?.filter(

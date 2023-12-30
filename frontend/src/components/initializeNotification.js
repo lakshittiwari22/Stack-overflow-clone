@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
 import { FetchAllPosts } from "../actions/post";
 import { fetchAllQuestions } from "../actions/question";
 import socket from "../webSocket/Socket";
+import notificationIcon from "../assets/favicon-32x32.png";
 
-export const initializeNotification = (dispatch) => {
+export const InitializeNotification = (dispatch, currentUserId) => {
   if ("Notification" in window) {
     // Request permission to show notifications
     Notification.requestPermission().then((permission) => {
@@ -16,13 +16,12 @@ export const initializeNotification = (dispatch) => {
   }
 
   socket.on("newPostNotification", (data) => {
-    let currentUser = useSelector((state) => state.currentUserReducer);
     const { userPosted, userId } = data.message;
-    if (data && currentUser?.result._id !== userId) {
+    if (data && currentUserId && currentUserId !== userId) {
       if (Notification.permission === "granted") {
         new Notification("Post", {
           body: `${userPosted} created a new post`,
-          // icon: { icon },
+          icon: { notificationIcon },
         });
       }
       dispatch(FetchAllPosts());
@@ -30,13 +29,13 @@ export const initializeNotification = (dispatch) => {
   });
 
   socket.on("newQuestionNotification", (data) => {
-    let currentUser = useSelector((state) => state.currentUserReducer);
     const { userPosted, userId } = data.message;
-    if (data && currentUser?.result._id !== userId) {
+
+    if (data && currentUserId && currentUserId !== userId) {
       if (Notification.permission === "granted") {
         new Notification("Post", {
           body: `${userPosted} posted a new question`,
-          // icon: { icon },
+          icon: { notificationIcon },
         });
       }
       dispatch(fetchAllQuestions());
@@ -44,14 +43,19 @@ export const initializeNotification = (dispatch) => {
   });
 
   socket.on("newAnswerNotification", (data) => {
-    let currentUser = useSelector((state) => state.currentUserReducer);
     const { userPosted, userId, userQuestioned } = data.message;
-    if (data && currentUser?.result._id !== userId) {
-      console.log(data);
+
+    const notificationText =
+      userId === currentUserId
+        ? `${userPosted} answered his own question`
+        : `${userPosted} answered ${userQuestioned}'s question`;
+
+    if (data && currentUserId && currentUserId !== userId) {
       if (Notification.permission === "granted") {
         new Notification("Post", {
-          body: `${userPosted} answered ${userQuestioned}'s question`,
-          // icon: { icon },
+          body: notificationText,
+
+          icon: { notificationIcon },
         });
       }
       dispatch(fetchAllQuestions());
