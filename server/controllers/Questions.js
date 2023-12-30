@@ -4,14 +4,16 @@ import { emitNewQuestionNotification } from "../sockets/socket.js";
 
 export const AskQuestion = async (req, res) => {
   const postQuestionData = req.body;
-  const userPosted = postQuestionData.userPosted;
+  const {userPosted, userId} = postQuestionData;
+  console.log(postQuestionData);
+  
   const postQuestion = new Questions({
     ...postQuestionData,
   });
 
   try {
     await postQuestion.save();
-    emitNewQuestionNotification(userPosted);
+    emitNewQuestionNotification(userPosted, userId);
     res.status(200).json("Posted a question successfully");
   } catch (error) {
     console.log(error);
