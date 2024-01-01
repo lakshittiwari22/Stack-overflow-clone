@@ -4,7 +4,7 @@ import { emitNewAnswerNotification } from "../sockets/socket.js";
 
 export const postAnswer = async (req, res) => {
   const { id: _id } = req.params;
-  const { noOfAnswers, answerBody, userAnswered, userId, userQuestioned } =
+  const { noOfAnswers, answerBody, userAnswered, userId, userQuestioned, userQuestionedId } =
     req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -15,9 +15,9 @@ export const postAnswer = async (req, res) => {
 
   try {
     const updatedQuestion = await Questions.findByIdAndUpdate(_id, {
-      $addToSet: { answer: [{ answerBody, userAnswered, userId }] },
+      $addToSet: { answer: [{ answerBody, userAnswered, userId, userQuestionedId}] },
     });
-    emitNewAnswerNotification(userAnswered, userId, userQuestioned);
+    emitNewAnswerNotification(userAnswered, userId, userQuestioned, userQuestionedId);
     res.status(200).json(updatedQuestion);
   } catch (error) {
     res.status(400).json(error);

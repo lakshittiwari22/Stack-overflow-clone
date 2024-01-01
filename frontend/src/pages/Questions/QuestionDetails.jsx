@@ -64,7 +64,8 @@ const QuestionDetails = () => {
             answerBody: quillValue,
             userAnswered: User.result.name,
             userId: User.result._id,
-            userQuestioned: userQuestioned.name
+            userQuestioned: userQuestioned.name,
+            userQuestionedId : userQuestioned._id
           })
         );
         setQuillValue("");

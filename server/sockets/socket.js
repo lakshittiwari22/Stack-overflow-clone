@@ -34,11 +34,12 @@ export const emitNewQuestionNotification = (userPosted, userId) => {
 export const emitNewAnswerNotification = (
   userPosted,
   userId,
-  userQuestioned
+  userQuestioned,
+  userQuestionedId
 ) => {
   if (io) {
     io.emit("newAnswerNotification", {
-      message: { userPosted, userId, userQuestioned },
+      message: { userPosted, userId, userQuestioned, userQuestionedId },
     });
   }
 };

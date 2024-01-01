@@ -5,7 +5,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL:"https://stack-overflow-clone-server-ebfz.onrender.com",
+  baseURL:"http://localhost:5000",
 });
 
 // sending users token  for each and every request to the database(backend)
@@ -31,13 +31,14 @@ export const deleteQuestion = (id) => API.delete(`/questions/delete/${id}`);
 export const voteQuestion = (id, value, userId) =>
   API.patch(`/questions/vote/${id}`, { value, userId });
 
-export const postAnswer = (id, noOfAnswers, answerBody, userAnswered, userId,userQuestioned) =>
+export const postAnswer = (id, noOfAnswers, answerBody, userAnswered, userId,userQuestioned, userQuestionedId) =>
   API.patch(`/answer/post/${id}`, {
     noOfAnswers,
     answerBody,
     userAnswered,
     userId,
-    userQuestioned
+    userQuestioned,
+    userQuestionedId
   });
 
 export const deleteAnswer = (id, answerId, noOfAnswers) =>

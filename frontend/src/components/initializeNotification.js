@@ -43,22 +43,21 @@ export const InitializeNotification = (dispatch, currentUserId) => {
   });
 
   socket.on("newAnswerNotification", (data) => {
-    const { userPosted, userId, userQuestioned } = data.message;
+    const { userPosted, userId, userQuestionedId } = data.message;
 
-    const notificationText =
-      userId === currentUserId
-        ? `${userPosted} answered his own question`
-        : `${userPosted} answered ${userQuestioned}'s question`;
+    console.log(userQuestionedId);
+    if (data && currentUserId && currentUserId === userQuestionedId) {
+      if (currentUserId && currentUserId !== userId) {
+        console.log(`${currentUserId} vs ${userId}`);
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${userPosted} answered your question`,
 
-    if (data && currentUserId && currentUserId !== userId) {
-      if (Notification.permission === "granted") {
-        new Notification("Post", {
-          body: notificationText,
-
-          icon: { notificationIcon },
-        });
+            icon: { notificationIcon },
+          });
+        }
+        dispatch(fetchAllQuestions());
       }
-      dispatch(fetchAllQuestions());
     }
   });
 
