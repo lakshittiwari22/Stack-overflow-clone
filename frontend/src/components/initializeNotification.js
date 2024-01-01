@@ -44,11 +44,8 @@ export const InitializeNotification = (dispatch, currentUserId) => {
 
   socket.on("newAnswerNotification", (data) => {
     const { userPosted, userId, userQuestionedId } = data.message;
-
-    console.log(userQuestionedId);
     if (data && currentUserId && currentUserId === userQuestionedId) {
       if (currentUserId && currentUserId !== userId) {
-        console.log(`${currentUserId} vs ${userId}`);
         if (Notification.permission === "granted") {
           new Notification("Post", {
             body: `${userPosted} answered your question`,
