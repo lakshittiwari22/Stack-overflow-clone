@@ -84,11 +84,11 @@ const QuestionDetails = () => {
 
   const handleUpVote = () => {
     console.log("clicked");
-    dispatch(voteQuestion(id, "upvote", User.result._id));
+    dispatch(voteQuestion(id, "upvote", User.result._id, User.result.name, userQuestioned._id));
   };
 
   const handleDownVote = () => {
-    dispatch(voteQuestion(id, "downvote", User.result._id));
+    dispatch(voteQuestion(id, "downvote", User.result._id, User.result.name, userQuestioned._id));
   };
 
   const modules = {

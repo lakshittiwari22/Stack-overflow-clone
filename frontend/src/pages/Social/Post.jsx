@@ -16,18 +16,6 @@ import Avatar from "../../components/Avatar/Avatar";
 import { LikePublicPost } from "../../actions/post";
 
 const Post = ({ post }) => {
-  // useEffect(() => {
-  //   //  "http://localhost:5000"
-  //   //"https://stack-overflow-clone-server-ebfz.onrender.com"
-
-  //   // Listen for 'newPostNotification' event from the server
-
-  //   return () => {
-  //     // Disconnect the socket when the component unmounts
-  //     // socket.off("newPostNotification");
-  //   };
-  // }, []);
-
   let User = useSelector((state) => state.currentUserReducer);
   const users = useSelector((state) => state.usersReducer);
   const postProfile = users?.filter((user) => user._id === post.userId)[0];
@@ -41,7 +29,9 @@ const Post = ({ post }) => {
   const location = useLocation();
 
   const handleLikes = () => {
-    dispatch(LikePublicPost(id, User.result._id));
+    dispatch(
+      LikePublicPost(id, User?.result._id, User.result.name, postProfile._id)
+    )
 
     setLike(!like);
   };
@@ -63,14 +53,16 @@ const Post = ({ post }) => {
           borderRadius="50%"
           color="white"
         >
-          {postProfile?.profileImg !== '' ? (
+          {postProfile?.profileImg !== "" ? (
             <img
               src={postProfile?.profileImg}
               alt="profile-picture"
               onClick={() => navigate(`/Users/${post?.userId}`)}
             />
           ) : (
-            <p  onClick={() => navigate(`/Users/${post?.userId}`)}>{postProfile?.name.charAt(0)} </p>
+            <p onClick={() => navigate(`/Users/${post?.userId}`)}>
+              {postProfile?.name.charAt(0)}{" "}
+            </p>
           )}
         </Avatar>
         <div className="username-container-2">

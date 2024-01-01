@@ -48,7 +48,9 @@ const PostDetails = () => {
   const location = useLocation();
 
   const handleLikes = () => {
-    dispatch(LikePublicPost(id, User.result._id));
+    dispatch(
+      LikePublicPost(id, User.result._id, User.result.name, postProfile._id)
+    );
   };
 
   const handleSubmit = (e, commentLength) => {
@@ -62,6 +64,7 @@ const PostDetails = () => {
           noOfComments: commentLength + 1,
           userCommented: User.result.name,
           userId: User.result._id,
+          postProfileId: postProfile._id
         })
       );
     } else if (!comment) {

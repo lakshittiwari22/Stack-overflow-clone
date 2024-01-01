@@ -43,3 +43,36 @@ export const emitNewAnswerNotification = (
     });
   }
 };
+
+export const emitLikeNotification = (userId, userLiked, postProfileId) => {
+  if (io) {
+    io.emit("likeNotification", {
+      message: { userId, userLiked, postProfileId },
+    });
+  }
+};
+export const emitUpVoteNotification = (userId, userVoted, userQuestionedId) => {
+  if (io) {
+    console.log(`socket:${userId}`);
+    io.emit("upVoteNotification", {
+      message: { userId, userVoted, userQuestionedId },
+    });
+  }
+};
+export const emitDownVoteNotification = (userId, userVoted, userQuestionedId) => {
+  if (io) {
+    io.emit("downVoteNotification", {
+      message: { userId,userVoted, userQuestionedId },
+    });
+  }
+};
+
+export const emitNewCommentNotification = (userId, userCommented, postProfileId) => {
+  if (io) {
+    io.emit("newCommentNotification", {
+      message: { userId, userCommented, postProfileId },
+    });
+  }
+};
+
+

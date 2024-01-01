@@ -1,6 +1,6 @@
 import Questions from "../models/Questions.js";
 import mongoose from "mongoose";
-import { emitNewQuestionNotification } from "../sockets/socket.js";
+import { emitDownVoteNotification, emitNewQuestionNotification, emitUpVoteNotification } from "../sockets/socket.js";
 
 export const AskQuestion = async (req, res) => {
   const postQuestionData = req.body;
@@ -47,7 +47,7 @@ export const deleteQuestion = async (req, res) => {
 
 export const voteQuestion = async (req, res) => {
   const { id: _id } = req.params;
-  const { value, userId } = req.body;
+  const { value, userId, userVoted, userQuestionedId } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("question unavailable..");
@@ -68,6 +68,7 @@ export const voteQuestion = async (req, res) => {
       }
       if (upIndex === -1) {
         question.upVote.push(userId);
+        emitUpVoteNotification(userId, userVoted, userQuestionedId);
       } else {
         question.upVote = question.upVote.filter((id) => id !== String(userId));
       }
@@ -79,6 +80,7 @@ export const voteQuestion = async (req, res) => {
       }
       if (downIndex === -1) {
         question.downVote.push(userId);
+        emitDownVoteNotification(userId, userVoted, userQuestionedId);
       } else {
         question.downVote = question.downVote.filter(
           (id) => id !== String(userId)

@@ -5,7 +5,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL:"https://stack-overflow-clone-server-ebfz.onrender.com",
+  baseURL: "https://stack-overflow-clone-server-ebfz.onrender.com",
 });
 
 // sending users token  for each and every request to the database(backend)
@@ -28,8 +28,8 @@ export const postQuestion = (questionData) =>
   API.post("/questions/Ask", questionData);
 export const getAllQuestions = () => API.get("/questions/get");
 export const deleteQuestion = (id) => API.delete(`/questions/delete/${id}`);
-export const voteQuestion = (id, value, userId) =>
-  API.patch(`/questions/vote/${id}`, { value, userId });
+export const voteQuestion = (id, value, userId, userVoted, userQuestionedId) =>
+  API.patch(`/questions/vote/${id}`, { value, userId, userVoted, userQuestionedId });
 
 export const postAnswer = (id, noOfAnswers, answerBody, userAnswered, userId,userQuestioned, userQuestionedId) =>
   API.patch(`/answer/post/${id}`, {
@@ -54,15 +54,16 @@ export const getAllPosts = () => API.get("/social/getAllposts");
 
 export const deletePost = (id) => API.delete(`/social/delete/${id}`);
 
-export const likePost = (id, userId) =>
-  API.patch("/social/like", { id, userId });
+export const likePost = (id, userId, userLiked, postProfileId) =>
+  API.patch("/social/like", { id, userId, userLiked, postProfileId });
 
 export const postComment = (
   id,
   commentBody,
   noOfComments,
   userCommented,
-  userId
+  userId,
+  postProfileId
 ) =>
   API.patch("/comment/post", {
     id,
@@ -70,6 +71,7 @@ export const postComment = (
     noOfComments,
     userCommented,
     userId,
+    postProfileId
   });
 
   export const deleteComment = (id, commentId, noOfComments) =>

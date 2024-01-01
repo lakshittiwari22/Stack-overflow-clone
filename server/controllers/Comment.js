@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import Posts from "../models/Post.js";
+import { emitNewCommentNotification } from "../sockets/socket.js";
 
 export const postComment = async (req, res) => {
-//   const { id: _id } = req.params;
-//   console.log(req.body.id);
-  const { id:_id, commentBody, noOfComments, userCommented, userId } = req.body.id;
+
+  const { id:_id, commentBody, noOfComments, userCommented, userId, postProfileId } = req.body.id;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("Post unavailable..");
@@ -16,6 +16,7 @@ export const postComment = async (req, res) => {
     const updatedPost = await Posts.findByIdAndUpdate(_id, {
       $addToSet: { comments: [{ commentBody, userCommented, userId }] },
     });
+    emitNewCommentNotification(userId, userCommented, postProfileId);
     res.status(200).json(updatedPost);
   } catch (error) {
     res.status(400).json(error);

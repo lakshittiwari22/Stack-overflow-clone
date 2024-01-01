@@ -42,6 +42,41 @@ export const InitializeNotification = (dispatch, currentUserId) => {
     }
   });
 
+  socket.on("upVoteNotification", (data) => {
+    console.log(`upVote: ${data.message}`);
+    const { userId, userVoted, userQuestionedId } = data.message;
+
+    if (data && currentUserId && currentUserId === userQuestionedId) {
+      if (currentUserId && currentUserId !== userId) {
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${userVoted} upVoted your question`,
+            icon: { notificationIcon },
+          });
+        }
+      }
+
+      dispatch(fetchAllQuestions());
+    }
+  });
+
+  socket.on("downVoteNotification", (data) => {
+    const { userId, userVoted, userQuestionedId } = data.message;
+
+    if (data && currentUserId && currentUserId === userQuestionedId) {
+      if (currentUserId && currentUserId !== userId) {
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${userVoted} downVoted your question`,
+            icon: { notificationIcon },
+          });
+        }
+      }
+
+      dispatch(fetchAllQuestions());
+    }
+  });
+
   socket.on("newAnswerNotification", (data) => {
     const { userPosted, userId, userQuestionedId } = data.message;
     if (data && currentUserId && currentUserId === userQuestionedId) {
@@ -54,6 +89,39 @@ export const InitializeNotification = (dispatch, currentUserId) => {
           });
         }
         dispatch(fetchAllQuestions());
+      }
+    }
+  });
+
+  socket.on("likeNotification", (data) => {
+    console.log(data);
+    const { userId, userLiked, postProfileId } = data.message;
+    if (data && currentUserId && currentUserId === postProfileId) {
+      if (currentUserId && currentUserId !== userId) {
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${userLiked} liked your post`,
+
+            icon: { notificationIcon },
+          });
+        }
+        dispatch(FetchAllPosts());
+      }
+    }
+  });
+
+  socket.on("newCommentNotification", (data) => {
+    const { userId, userCommented, postProfileId } = data.message;
+    if (data && currentUserId && currentUserId === postProfileId) {
+      if (currentUserId && currentUserId !== userId) {
+        if (Notification.permission === "granted") {
+          new Notification("Post", {
+            body: `${userCommented} commented on your post`,
+
+            icon: { notificationIcon },
+          });
+        }
+        dispatch(FetchAllPosts());
       }
     }
   });
