@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams} from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import copy from "copy-to-clipboard";
@@ -43,13 +43,11 @@ const QuestionDetails = () => {
     (user) => user._id === displayQuestion?.userId
   )[0];
 
-
-
   const handlePostAns = (e, answerLength) => {
     e.preventDefault();
 
     const isEmptyAnswer = /^(\s*|<p>\s*<\/p>)$/.test(quillValue);
-    console.log(isEmptyAnswer);
+
     if (User === null) {
       alert("Login or Signup to answer a question");
       navigate("/");
@@ -65,7 +63,7 @@ const QuestionDetails = () => {
             userAnswered: User.result.name,
             userId: User.result._id,
             userQuestioned: userQuestioned.name,
-            userQuestionedId : userQuestioned._id
+            userQuestionedId: userQuestioned._id,
           })
         );
         setQuillValue("");
@@ -83,12 +81,27 @@ const QuestionDetails = () => {
   };
 
   const handleUpVote = () => {
-    console.log("clicked");
-    dispatch(voteQuestion(id, "upvote", User.result._id, User.result.name, userQuestioned._id));
+    dispatch(
+      voteQuestion(
+        id,
+        "upvote",
+        User.result._id,
+        User.result.name,
+        userQuestioned._id
+      )
+    );
   };
 
   const handleDownVote = () => {
-    dispatch(voteQuestion(id, "downvote", User.result._id, User.result.name, userQuestioned._id));
+    dispatch(
+      voteQuestion(
+        id,
+        "downvote",
+        User.result._id,
+        User.result.name,
+        userQuestioned._id
+      )
+    );
   };
 
   const modules = {
@@ -125,7 +138,6 @@ const QuestionDetails = () => {
     "code",
   ];
 
- 
   return (
     <div className="question-details-page">
       {questionsList.data === null ? (

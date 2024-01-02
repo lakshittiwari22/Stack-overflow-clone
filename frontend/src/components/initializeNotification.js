@@ -56,7 +56,7 @@ export const InitializeNotification = (dispatch, currentUserId) => {
           createClickableNotification(
             "Vote",
             `${userVoted} upVoted your question`,
-            `${baseUrl}/Questions${_id}`
+            `${baseUrl}/Questions/${_id}`
           );
           dispatch(fetchAllQuestions());
         }
@@ -73,7 +73,7 @@ export const InitializeNotification = (dispatch, currentUserId) => {
           createClickableNotification(
             "Vote",
             `${userVoted} downVoted your question`,
-            `${baseUrl}/Questions${_id}`
+            `${baseUrl}/Questions/${_id}`
           );
           dispatch(fetchAllQuestions());
         }
@@ -89,7 +89,7 @@ export const InitializeNotification = (dispatch, currentUserId) => {
           createClickableNotification(
             "Answer",
             `${userPosted} answered your question`,
-            `${baseUrl}/Questions${_id}`
+            `${baseUrl}/Questions/${_id}`
           );
           dispatch(fetchAllQuestions());
         }
