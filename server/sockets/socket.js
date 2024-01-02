@@ -32,6 +32,7 @@ export const emitNewQuestionNotification = (userPosted, userId) => {
 };
 
 export const emitNewAnswerNotification = (
+  _id,
   userPosted,
   userId,
   userQuestioned,
@@ -39,40 +40,53 @@ export const emitNewAnswerNotification = (
 ) => {
   if (io) {
     io.emit("newAnswerNotification", {
-      message: { userPosted, userId, userQuestioned, userQuestionedId },
+      message: { _id, userPosted, userId, userQuestioned, userQuestionedId },
     });
   }
 };
 
-export const emitLikeNotification = (userId, userLiked, postProfileId) => {
+export const emitLikeNotification = (_id, userId, userLiked, postProfileId) => {
   if (io) {
     io.emit("likeNotification", {
-      message: { userId, userLiked, postProfileId },
+      message: { _id, userId, userLiked, postProfileId },
     });
   }
 };
-export const emitUpVoteNotification = (userId, userVoted, userQuestionedId) => {
+export const emitUpVoteNotification = (
+  _id,
+  userId,
+  userVoted,
+  userQuestionedId
+) => {
   if (io) {
     console.log(`socket:${userId}`);
     io.emit("upVoteNotification", {
-      message: { userId, userVoted, userQuestionedId },
+      message: { _id, userId, userVoted, userQuestionedId },
     });
   }
 };
-export const emitDownVoteNotification = (userId, userVoted, userQuestionedId) => {
+export const emitDownVoteNotification = (
+  _id,
+  userId,
+  userVoted,
+  userQuestionedId
+) => {
   if (io) {
     io.emit("downVoteNotification", {
-      message: { userId,userVoted, userQuestionedId },
+      message: { _id, userId, userVoted, userQuestionedId },
     });
   }
 };
 
-export const emitNewCommentNotification = (userId, userCommented, postProfileId) => {
+export const emitNewCommentNotification = (
+  _id,
+  userId,
+  userCommented,
+  postProfileId
+) => {
   if (io) {
     io.emit("newCommentNotification", {
-      message: { userId, userCommented, postProfileId },
+      message: { _id, userId, userCommented, postProfileId },
     });
   }
 };
-
-

@@ -1,12 +1,15 @@
 import Questions from "../models/Questions.js";
 import mongoose from "mongoose";
-import { emitDownVoteNotification, emitNewQuestionNotification, emitUpVoteNotification } from "../sockets/socket.js";
+import {
+  emitDownVoteNotification,
+  emitNewQuestionNotification,
+  emitUpVoteNotification,
+} from "../sockets/socket.js";
 
 export const AskQuestion = async (req, res) => {
   const postQuestionData = req.body;
-  const {userPosted, userId} = postQuestionData;
-  console.log(postQuestionData);
-  
+  const { userPosted, userId } = postQuestionData;
+
   const postQuestion = new Questions({
     ...postQuestionData,
   });
@@ -68,7 +71,7 @@ export const voteQuestion = async (req, res) => {
       }
       if (upIndex === -1) {
         question.upVote.push(userId);
-        emitUpVoteNotification(userId, userVoted, userQuestionedId);
+        emitUpVoteNotification(_id, userId, userVoted, userQuestionedId);
       } else {
         question.upVote = question.upVote.filter((id) => id !== String(userId));
       }
@@ -80,7 +83,7 @@ export const voteQuestion = async (req, res) => {
       }
       if (downIndex === -1) {
         question.downVote.push(userId);
-        emitDownVoteNotification(userId, userVoted, userQuestionedId);
+        emitDownVoteNotification(_id, userId, userVoted, userQuestionedId);
       } else {
         question.downVote = question.downVote.filter(
           (id) => id !== String(userId)

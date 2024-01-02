@@ -59,7 +59,7 @@ export const likePost = async (req, res) => {
 
     if (upIndex === -1) {
       post.likes.push(String(userId));
-      emitLikeNotification(userId, userLiked, postProfileId);
+      emitLikeNotification(_id, userId, userLiked, postProfileId);
     } else {
       post.likes = post.likes.filter((id) => id !== String(userId));
     }

@@ -16,7 +16,7 @@ export const postComment = async (req, res) => {
     const updatedPost = await Posts.findByIdAndUpdate(_id, {
       $addToSet: { comments: [{ commentBody, userCommented, userId }] },
     });
-    emitNewCommentNotification(userId, userCommented, postProfileId);
+    emitNewCommentNotification(_id, userId, userCommented, postProfileId);
     res.status(200).json(updatedPost);
   } catch (error) {
     res.status(400).json(error);

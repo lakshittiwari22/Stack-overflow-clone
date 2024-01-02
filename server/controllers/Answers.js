@@ -17,7 +17,7 @@ export const postAnswer = async (req, res) => {
     const updatedQuestion = await Questions.findByIdAndUpdate(_id, {
       $addToSet: { answer: [{ answerBody, userAnswered, userId, userQuestionedId}] },
     });
-    emitNewAnswerNotification(userAnswered, userId, userQuestioned, userQuestionedId);
+    emitNewAnswerNotification(_id, userAnswered, userId, userQuestioned, userQuestionedId);
     res.status(200).json(updatedQuestion);
   } catch (error) {
     res.status(400).json(error);
