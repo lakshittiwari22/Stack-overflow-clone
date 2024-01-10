@@ -8,6 +8,7 @@
 .question-details-container {
   margin-bottom: 20px;
   padding-bottom: 20px;
+  word-wrap: break-word;
   border-bottom: solid 1px #dbdbdb;
 }
 .question-details-container-2 {
@@ -41,7 +42,8 @@
 
 .question-body pre, .answer-body pre {
   background-color: var(--background-nav);
-  padding: 2px 4px;
+  padding: 2px 8px;
+  white-space: pre-wrap;
   border-radius: 4px;
   font-weight: 700;
   font-family: "Courier New", monospace;

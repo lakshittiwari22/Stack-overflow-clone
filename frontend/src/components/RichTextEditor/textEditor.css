@@ -1,0 +1,75 @@
+
+.editor {
+  width: 100%;
+}
+
+.toolbar {
+  border: 1px solid var(--border-color);
+  padding: 5px;
+}
+.text-editor {
+  border: 1px solid var(--border-color);
+  padding-left: 2px;
+  min-height: 100px;
+  padding: 5px;
+  resize: vertical;
+  overflow: auto;
+}
+
+
+
+.editor-btn {
+  background: none;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+  color: #515151;
+}
+
+.editor-btn:hover {
+  color: blue;
+}
+
+
+
+.text-editor blockquote {
+  border-left: 4px solid #515151;
+  padding-left: 5px;
+  margin: 5px;
+}
+
+.text-editor pre {
+  background-color: #dbdbdb;
+  color: #636b74;
+  white-space: pre-wrap;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.text-editor code {
+  background-color: #dbdbdb;
+  color: #636b74;
+
+  border-radius: 5px;
+}
+
+.text-editor img {
+  width: 100px;
+  height: 100px;
+}
+.text-editor video {
+  width: 200px;
+  height: 200px;
+}
+
+.content-priview img {
+  width: 100px;
+  height: 100px;
+}
+
+.content-priview video {
+  width: 200px;
+  height: 200px;
+}

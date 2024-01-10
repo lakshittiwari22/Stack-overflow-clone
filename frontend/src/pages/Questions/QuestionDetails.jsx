@@ -17,6 +17,7 @@ import "react-quill/dist/quill.snow.css";
 
 import "./questionspage.css";
 import Avatar from "../../components/Avatar/Avatar";
+import TextEditor from "../../components/RichTextEditor/TextEditor";
 
 const QuestionDetails = () => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const QuestionDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // const [answer, setAnswer] = useState(" ");
-  const [quillValue, setQuillValue] = useState("");
+  const [editorValue, setEditorValue] = useState("");
 
   // Get the full URL of the current page
   const currentUrl = window.location.href;
@@ -43,10 +44,14 @@ const QuestionDetails = () => {
     (user) => user._id === displayQuestion?.userId
   )[0];
 
+  const handleEditorChange = (content) => {
+    setEditorValue(content);
+  };
+
   const handlePostAns = (e, answerLength) => {
     e.preventDefault();
 
-    const isEmptyAnswer = /^(\s*|<p>\s*<\/p>)$/.test(quillValue);
+    const isEmptyAnswer = /^(\s*|<p>\s*<\/p>)$/.test(editorValue);
 
     if (User === null) {
       alert("Login or Signup to answer a question");
@@ -59,14 +64,14 @@ const QuestionDetails = () => {
           postAnswer({
             id,
             noOfAnswers: answerLength + 1,
-            answerBody: quillValue,
+            answerBody: editorValue,
             userAnswered: User.result.name,
             userId: User.result._id,
             userQuestioned: userQuestioned.name,
             userQuestionedId: userQuestioned._id,
           })
         );
-        setQuillValue("");
+        setEditorValue(" ");
       }
     }
   };
@@ -104,39 +109,7 @@ const QuestionDetails = () => {
     );
   };
 
-  const modules = {
-    toolbar: [
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ header: 1 }, { header: 2 }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["link"],
-      ["image"],
-      ["video"],
-      ["code-block"],
-      ["code"],
-      ["clean"],
-    ],
-  };
-
-  const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-    "code-block",
-    "clean",
-    "code",
-  ];
+  
 
   return (
     <div className="question-details-page">
@@ -165,7 +138,7 @@ const QuestionDetails = () => {
                         onClick={handleDownVote}
                       />
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div style={{ width: "90%" }}>
                       <p
                         className="question-body"
                         dangerouslySetInnerHTML={{
@@ -237,26 +210,7 @@ const QuestionDetails = () => {
                       handlePostAns(e, question.answer.length);
                     }}
                   >
-                    <ReactQuill
-                      theme="snow"
-                      // value={questionBody}
-
-                      value={quillValue}
-                      onChange={(value) => setQuillValue(value)}
-                      modules={modules}
-                      formats={formats}
-                      dangerouslySetInnerHTML={{ __html: quillValue }}
-                    />
-                    {/* 
-                    <textarea
-                      name="
-                    "
-                      id=""
-                      cols="30"
-                      rows="10"
-                      value={answer}
-                      onChange={(e) => setAnswer(e.target.value)}
-                    ></textarea> */}
+                 <TextEditor  onContentChange={handleEditorChange}/>
                     <br />
                     <input
                       type="submit"

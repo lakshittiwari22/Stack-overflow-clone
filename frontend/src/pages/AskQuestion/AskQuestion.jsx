@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
 
 import "./askquestion.css";
 import { AskPublicQuestion } from "../../actions/question";
+import TextEditor from "../../components/RichTextEditor/TextEditor";
 
 const AskQuestion = () => {
   const [questionTitle, setQuestionTitle] = useState("");
-  const [quillValue, setQuillValue] = useState("");
+  const [editorValue, setEditorValue] = useState("");
   const [questionTags, setQuestionTags] = useState("");
 
   const dispatch = useDispatch();
@@ -17,16 +18,20 @@ const AskQuestion = () => {
 
   const navigate = useNavigate();
 
+  const handleEditorChange = (content) => {
+    setEditorValue(content);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isEmptyAnswer = /^(\s*|<p>\s*<\/p>)$/.test(quillValue);
+    const isEmptyAnswer = /^(\s*|<p>\s*<\/p>)$/.test(editorValue);
     if (User) {
       if (questionTitle && !isEmptyAnswer && questionTags) {
         dispatch(
           AskPublicQuestion(
             {
               questionTitle,
-              questionBody: quillValue,
+              questionBody: editorValue,
               questionTags,
               userPosted: User.result.name,
               userId: User.result._id,
@@ -37,41 +42,6 @@ const AskQuestion = () => {
       } else alert("Please enter all the fields");
     } else alert("Login to ask question");
   };
-
-  const modules = {
-    toolbar: [
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ header: 1 }, { header: 2 }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["link"],
-      ["image"],
-      ["video"],
-      [ "code-block" ],
-      [ "code"],
-      ["clean"],
-      
-    ],
-  };
-
-  const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-    "code-block",
-    "clean",
-    'code'
-  ];
 
   return (
     <div className="ask-question">
@@ -101,28 +71,8 @@ const AskQuestion = () => {
                 Include all the information someone would need to answer your
                 question
               </p>
-              <ReactQuill
-                theme="snow"
-                
-                // value={questionBody}
 
-                value={quillValue}
-                onChange={(value) => setQuillValue(value)}
-                modules={modules}
-                formats={formats}
-                dangerouslySetInnerHTML={{ __html: quillValue }}
-              />
-
-              {/* <textarea
-                name=""
-                id="ask-ques-body"
-                onChange={(e) => {
-                  setQuestionBody(e.target.value);
-                }}
-                onKeyDown={handleEnter}
-                cols="30"
-                rows="10"
-              ></textarea> */}
+              <TextEditor onContentChange={handleEditorChange} />
             </label>
 
             <label htmlFor="ask-ques-tags">

@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "../../components/Avatar/Avatar";
 import moment from "moment";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +33,7 @@ const DisplayComments = ({ comment, post }) => {
           borderRadius="50%"
           color="white"
         >
-          {commentProfile.profileImg === '' ? (
+          {commentProfile?.profileImg === '' ? (
             <p onClick={() => navigate(`/Users/${comment.userId}`)}>
               {comment.userCommented.charAt(0)}
             </p>
