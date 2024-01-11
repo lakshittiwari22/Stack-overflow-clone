@@ -12,8 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
 import DisplayAnswers from "./DisplayAnswers";
 import { useSelector } from "react-redux";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 
 import "./questionspage.css";
 import Avatar from "../../components/Avatar/Avatar";

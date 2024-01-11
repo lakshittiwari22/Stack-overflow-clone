@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import ReactQuill from "react-quill";
-// import "react-quill/dist/quill.snow.css";
+
 
 import "./askquestion.css";
 import { AskPublicQuestion } from "../../actions/question";
