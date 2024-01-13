@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { fetchAllQuestions } from "./actions/question";
 import { fetchAllUsers } from "./actions/users";
 import { FetchAllPosts } from "./actions/post";
-import { InitializeNotification } from "./components/InitializeNotification";
+import { InitializeNotification } from "./components/initializeNotification";
 
 
 function App() {
