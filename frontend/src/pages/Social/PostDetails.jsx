@@ -16,6 +16,7 @@ import DisplayComments from "./DisplayComments";
 import { useDispatch, useSelector } from "react-redux";
 import { LikePublicPost, deletePost, postComment } from "../../actions/post";
 import moment from "moment";
+import customBadWords from "./badwords";
 
 const PostDetails = () => {
   useEffect(() => {
@@ -90,6 +91,8 @@ const PostDetails = () => {
 
   const containsBadWords = (text) => {
     const filter = new Filter();
+   
+    filter.addWords(...customBadWords);
     return filter.isProfane(text);
   };
 

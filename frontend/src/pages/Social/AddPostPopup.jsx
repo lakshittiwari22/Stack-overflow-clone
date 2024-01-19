@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../../components/Avatar/Avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faPhotoFilm } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Filter from "bad-words";
 
 import { CreatePublicPost } from "../../actions/post";
+import customBadWords from "./badwords";
+
 
 const AddPostPopup = ({ trigger, setTrigger }) => {
+ 
   let User = useSelector((state) => state.currentUserReducer);
   let allUsers = useSelector((state) => state.usersReducer);
   const currentUser = allUsers?.filter(
@@ -79,7 +82,11 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
 
   // Function to check for bad words
   const containsBadWords = (text) => {
+   
     const filter = new Filter();
+   
+   
+    filter.addWords(...customBadWords);
     return filter.isProfane(text);
   };
 

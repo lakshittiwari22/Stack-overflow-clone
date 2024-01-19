@@ -55,12 +55,25 @@ const Navbar = () => {
 
   useEffect(() => {
     //calling the weather info function
-    getWeatherInfo(setIsDarkMode);
 
-    // Set up an interval to toggle dark mode automatically every minute
-    const intervalId = setInterval(() => {
-      getWeatherInfo();
-    }, 10 * 60000); // Check every 10 minutes
+    const setDarkMode = () => {
+      getWeatherInfo().then((darkweather) => {
+        const now = new Date();
+        const hour = now.getHours();
+
+        if (18 <= hour || hour < 6 || darkweather) {
+          // Set light mode if the current hour is between 6 AM and 6 PM
+          setIsDarkMode(true);
+          body.classList.add("dark-mode");
+        } else {
+          // Set dark mode for other hours
+          setIsDarkMode(false);
+          body.classList.remove("dark-mode");
+        }
+      });
+    };
+
+    setDarkMode();
 
     const token = User?.token;
 
@@ -81,13 +94,16 @@ const Navbar = () => {
         setSlide(false);
       }
     };
+    const intervalId = setInterval(() => {
+      setDarkMode();
+    }, 10 * 60000); // Update in 10 mins
 
     document.addEventListener("mousedown", handler);
     return () => {
       document.removeEventListener("mousedown", handler);
       clearInterval(intervalId);
     };
-  }, [dispatch]);
+  }, [dispatch, setIsDarkMode]);
 
   return (
     <>

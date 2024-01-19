@@ -5,14 +5,13 @@ import notificationIcon from "../assets/stack-overflow-notification-icon.png";
 
 export const InitializeNotification = (dispatch, currentUserId) => {
   const baseUrl = window.location.origin;
-//seeking permision
+  //seeking permision
   if ("Notification" in window) {
-    // Request permission to show notifications
     Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
-        console.log("permission granted");
+        console.log("Notification permission granted");
       } else {
-        console.log("permission not granted");
+        console.log("Notification permission not granted");
       }
     });
   }
