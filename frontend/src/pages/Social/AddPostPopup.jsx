@@ -1,17 +1,16 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../../components/Avatar/Avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faPhotoFilm } from "@fortawesome/free-solid-svg-icons";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Filter from "bad-words";
+import Sentiment from "sentiment";
 
 import { CreatePublicPost } from "../../actions/post";
 import customBadWords from "./badwords";
 
-
 const AddPostPopup = ({ trigger, setTrigger }) => {
- 
   let User = useSelector((state) => state.currentUserReducer);
   let allUsers = useSelector((state) => state.usersReducer);
   const currentUser = allUsers?.filter(
@@ -28,7 +27,11 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
 
     const isCaptionEmpty = /^\s*$/.test(caption);
     if (User) {
-      if (!isCaptionEmpty && !containsBadWords(caption)) {
+      if (
+        !isCaptionEmpty &&
+        !containsBadWords(caption) &&
+        !containsHateSpeech(caption)
+      ) {
         dispatch(
           CreatePublicPost(
             {
@@ -58,6 +61,16 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
     setCaption("");
   };
 
+  const sentiment = new Sentiment();
+
+  // Function to check for hate speech
+  function containsHateSpeech(text) {
+    const result = sentiment.analyze(text);
+
+    // Adjust the threshold based on your needs
+    return result.score < 0;
+  }
+
   const convertToBase64 = (e) => {
     const file = e.target.files[0];
 
@@ -82,10 +95,8 @@ const AddPostPopup = ({ trigger, setTrigger }) => {
 
   // Function to check for bad words
   const containsBadWords = (text) => {
-   
     const filter = new Filter();
-   
-   
+
     filter.addWords(...customBadWords);
     return filter.isProfane(text);
   };

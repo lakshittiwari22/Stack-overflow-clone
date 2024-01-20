@@ -10,6 +10,7 @@ import {
   faComment,
 } from "@fortawesome/free-solid-svg-icons";
 import Filter from "bad-words";
+import Sentiment from "sentiment";
 
 import Avatar from "../../components/Avatar/Avatar";
 import DisplayComments from "./DisplayComments";
@@ -57,7 +58,7 @@ const PostDetails = () => {
   const handleSubmit = (e, commentLength) => {
     e.preventDefault();
 
-    if (comment && !containsBadWords(comment)) {
+    if (comment && !containsBadWords(comment) && !containsHateSpeech(comment)) {
       dispatch(
         postComment({
           id,
@@ -79,6 +80,17 @@ const PostDetails = () => {
     setComment("");
     setIsSubmitting(false);
   };
+
+  const sentiment = new Sentiment();
+
+  // Function to check for hate speech
+  function containsHateSpeech(text) {
+    const result = sentiment.analyze(text);
+
+    // Adjust the threshold based on your needs
+    return result.score < 0;
+  }
+
 
   const handleDelete = () => {
     dispatch(deletePost(id, navigate));
