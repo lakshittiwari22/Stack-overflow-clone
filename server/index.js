@@ -2,7 +2,9 @@ import express, { urlencoded } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-// import http from "http";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 
 import userRoutes from "./routes/users.js";
 import questionRoutes from "./routes/Questions.js";
@@ -12,12 +14,23 @@ import commentRoutes from "./routes/Comment.js";
 import { initializeWebSocket } from "./sockets/socket.js";
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const app = express();
 // const server = http.createServer(app);
 
 app.use(express.json({ limit: "100mb", extended: true })); // use to parse data from the body
 app.use(express(urlencoded({ limit: "30mb", extended: true })));
 app.use(cors());
+
+// Serve your static files from the 'public' directory
+app.use(express.static(dirname(__dirname)));
+
+// Set up a route to serve your 'sw.js' file
+app.get('/sw.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'sw.js'));
+});
 
 app.get("/", (req, res) => {
   res.send("This is a stack overflow clone api");

@@ -5,11 +5,23 @@ import notificationIcon from "../assets/stack-overflow-notification-icon.png";
 
 export const InitializeNotification = (dispatch, currentUserId) => {
   const baseUrl = window.location.origin;
+
+  navigator.serviceWorker.register('/sw.js')
+    .then((registration) => {
+      console.log('Service Worker registered:', registration);
+    })
+    .catch((error) => {
+      console.error('Service Worker registration failed:', error);
+    });
   //seeking permision
   if ("Notification" in window) {
     Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification('Notification with ServiceWorker');
+        });
         console.log("Notification permission granted");
+
       } else {
         console.log("Notification permission not granted");
       }
