@@ -25,7 +25,7 @@ export const getAllUsers = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   const { id: _id } = req.params;
-  const { name, about, tags, profileImg } = req.body;
+  const { name, phoneNumber, about, tags, profileImg } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("question unavailable..");
@@ -35,7 +35,7 @@ export const updateProfile = async (req, res) => {
     const updatedProfile = await User.findByIdAndUpdate(
       _id,
       {
-        $set: { name: name, about: about, tags: tags, profileImg: profileImg },
+        $set: { name: name, phoneNumber:phoneNumber, about: about, tags: tags, profileImg: profileImg },
       },
       { new: true } // 'new' parameter is used so as to get an record from the database
     );

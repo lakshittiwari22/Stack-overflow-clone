@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
+// import twilio from "twilio";
 
 import userRoutes from "./routes/users.js";
 import questionRoutes from "./routes/Questions.js";
@@ -26,6 +26,51 @@ app.use(cors());
 
 // Serve your static files from the 'public' directory
 app.use(express.static(dirname(__dirname)));
+
+
+// Set up Twilio
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
+
+// const twilioClient = twilio(accountSid, authToken);
+
+// // Function to generate a random OTP
+// const generateOTP = () => {
+//   return Math.floor(100000 + Math.random() * 900000).toString();
+// };
+
+// // Function to send OTP via Twilio
+// const sendOtpViaTwilio = async (to, otp) => {
+//   console.log(to,otp);
+//   try {
+//     const message = await twilioClient.messages.create({
+//       body: `Your OTP for verification is: ${otp}`,
+//       from: '+16182683635',
+//       to,
+//     });
+
+//     console.log(`OTP sent successfully. SID: ${message.sid}`);
+//   } catch (error) {
+//     console.error("Error sending OTP:", error.message);
+//   }
+// };
+
+// // Example route to send OTP
+// app.post("/send-otp", async (req, res) => {
+//   const { phoneNumber } = req.body;
+  
+
+//   // Generate a random OTP
+//   const otp = generateOTP();
+
+//   // Save the OTP in your database (optional)
+
+//   // Send OTP via Twilio
+//   await sendOtpViaTwilio(phoneNumber, otp);
+
+//   res.json({ success: true, message: "OTP sent successfully" });
+// });
 
 // Set up a route to serve your 'sw.js' file
 app.get('/sw.js', (req, res) => {

@@ -35,3 +35,14 @@ export const login = (authData, navigate) => async (dispatch) => {
   }
 };
 
+export const loginWithOTP = (phoneNumber, navigate) => async (dispatch) => {
+  try {
+    const { data } = await api.loginWithOTP(phoneNumber);
+    dispatch({ type: "AUTH", data });
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+    navigate("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+

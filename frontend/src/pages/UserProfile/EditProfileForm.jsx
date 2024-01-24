@@ -7,6 +7,7 @@ import { faX} from "@fortawesome/free-solid-svg-icons";
 
 const EditProfileForm = ({ currentUser, setSwitch }) => {
   const [name, setName] = useState(currentUser?.result?.name);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [about, setAbout] = useState(currentUser?.result?.about);
   const [tags, setTags] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
@@ -19,14 +20,14 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
     avatarOptions.push(`https://robohash.org/avatar${i}.png`);
   }
   //------------------------------------------------------------------------
-
+const newPhoneNumber = '+91'+phoneNumber
   const handleSubmit = (e) => {
     e.preventDefault();
     if (tags[0] === "" || tags.length === 0) {
       alert("Update tags field");
     } else {
       dispatch(
-        updateProfile(id, { name, about, tags, profileImg: profilePicture })
+        updateProfile(id, { name,phoneNumber: newPhoneNumber, about, tags, profileImg: profilePicture })
       );
     }
     setProfilePicture("");
@@ -63,6 +64,15 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+
+        <label htmlFor="name">
+          <h3>Phone Number</h3>
+          <input
+            type="tel"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </label>
 

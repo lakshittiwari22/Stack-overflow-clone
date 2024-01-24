@@ -24,6 +24,8 @@ export const signUp = (authData) => API.post("/user/signup", authData);
 export const signUpGoogle = (accessToken) =>
   API.post("/user/signupgoogle", { googleAccessToken: accessToken });
 
+export const loginWithOTP = (phoneNumber) => API.post('/user/loginwithotp',phoneNumber)
+
 export const postQuestion = (questionData) =>
   API.post("/questions/Ask", questionData);
 export const getAllQuestions = () => API.get("/questions/get");

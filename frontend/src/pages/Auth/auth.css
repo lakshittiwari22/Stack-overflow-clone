@@ -68,6 +68,7 @@
 }
 
 .auth-btn {
+  width: 97%;
   margin-top: 10px;
   padding: 10px 5px;
   background-color: #009dff;
@@ -78,6 +79,20 @@
   transition: 0.2s;
   font-size: 13px;
   font-weight: 500;
+}
+
+.otp-btn{
+  width: 97%;
+  background-color: #009dff;
+  border: solid 1px #009dff;
+  color: var(--text-button);
+  border-radius: 5px;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+.otp-btn:hover{
+  background-color: #018ce3;
 }
 
 .auth-btn:hover {
