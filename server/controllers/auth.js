@@ -93,7 +93,6 @@ export const signUpGoogle = async (req, res) => {
 };
 
 export const login = async (req, res) => {
- 
   const { email, password } = req.body;
 
   try {
@@ -144,9 +143,7 @@ export const otpVerification = async (req, res) => {
       });
 
       console.log(`OTP sent successfully. SID: ${message.sid}`);
-    
     } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to send OTP. Please try again." });
       console.error("Error sending OTP:", error.message);
     }
   };
@@ -164,10 +161,7 @@ export const otpVerification = async (req, res) => {
   res.json({ success: true, message: otp });
 };
 
-
-
 export const loginWithOTP = async (req, res) => {
- 
   const { phoneNumber } = req.body;
 
   try {
@@ -176,8 +170,6 @@ export const loginWithOTP = async (req, res) => {
     if (!existinguser) {
       return res.status(404).json({ message: "User does'nt exist!" });
     }
-
-   
 
     const token = jwt.sign(
       { phoneNumber: existinguser.phoneNumber, id: existinguser._id },
