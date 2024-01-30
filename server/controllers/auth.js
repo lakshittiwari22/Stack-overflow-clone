@@ -93,7 +93,6 @@ export const signUpGoogle = async (req, res) => {
 };
 
 export const login = async (req, res) => {
- 
   const { email, password } = req.body;
 
   try {
@@ -144,10 +143,14 @@ export const otpVerification = async (req, res) => {
       });
 
       console.log(`OTP sent successfully. SID: ${message.sid}`);
-    
+      return true;
     } catch (error) {
-      res.status(500).json({ success: false, message: "Failed to send OTP. Please try again." });
+      res.status(500).json({
+        success: false,
+        message: "Failed to send OTP. Please try again.",
+      });
       console.error("Error sending OTP:", error.message);
+      return false;
     }
   };
 
@@ -156,18 +159,22 @@ export const otpVerification = async (req, res) => {
   // Generate a random OTP
   const otp = generateOTP();
 
-  // Save the OTP in your database (optional)
+  try {
+    // Send OTP via Twilio and wait for the result
+    const success = await sendOtpViaTwilio(phoneNumber, otp);
 
-  // Send OTP via Twilio
-  await sendOtpViaTwilio(phoneNumber, otp);
-
-  res.json({ success: true, message: otp });
+    if (success) {
+      res.json({ success: true, message: otp });
+    }
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Unexpected error. Please try again." });
+  }
 };
 
-
-
 export const loginWithOTP = async (req, res) => {
- 
   const { phoneNumber } = req.body;
 
   try {
@@ -176,8 +183,6 @@ export const loginWithOTP = async (req, res) => {
     if (!existinguser) {
       return res.status(404).json({ message: "User does'nt exist!" });
     }
-
-   
 
     const token = jwt.sign(
       { phoneNumber: existinguser.phoneNumber, id: existinguser._id },
